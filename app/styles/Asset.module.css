@@ -1,0 +1,312 @@
+.main {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 3rem 4rem 3rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: #ffffff;
+  margin: 1rem 0;
+}
+
+.subtitle {
+  width: 700px;
+}
+
+.sectionContainer {
+  width: 700px;
+  background: #18151e;
+  border: 1px solid #211e27;
+  border-radius: 15px;
+  padding: 0.5rem 2rem 1.5rem 2rem;
+}
+
+.sectionTitleContainer {
+  width: 100%;
+  align-items: flex-start !important;
+}
+
+.sectionTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  padding: 1rem 0;
+}
+
+.minterTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+  padding: 0.5rem 0;
+}
+
+.minterImage {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.historyImage {
+  width: 24px;
+  height: 24px;
+}
+
+.minter {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  padding-left: 0.5rem;
+}
+
+.historyTitle {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  margin: 0;
+}
+
+.historySubtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  color: #6f6f6f;
+  margin: 0;
+}
+
+.historyRightSection {
+  align-items: flex-start !important;
+}
+
+.historyLeftSection {
+  width: 100%;
+  align-items: flex-end !important;
+}
+
+.propertyCell {
+  width: 201px;
+  height: 86px;
+  left: 195px;
+  top: 1053px;
+
+  background: #201c29;
+  border: 1px solid #2f2f2f;
+  border-radius: 10px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.propertyTitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  text-align: center;
+  color: #d9d9d9;
+  margin: 0;
+}
+
+.propertySubtitle {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  color: #ffffff;
+  margin: 0;
+}
+
+.detailTextContainer {
+  width: 100%;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.detailTitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  color: #ffffff;
+  margin: 0.5rem 0;
+}
+
+.detailSubtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  text-align: right;
+  color: #d9d9d9;
+  margin: 0;
+}
+
+.minterContainer {
+  width: 100%;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  padding: 1rem 0;
+}
+
+.priceContainer {
+  width: 310px;
+  background: #18151e;
+  border: 1px solid #211e27;
+  border-radius: 25px;
+  padding: 1.5rem 2rem;
+  align-items: flex-start !important;
+}
+
+.priceTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  margin: 0;
+}
+
+.priceTag {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 32px;
+  margin: 0;
+}
+
+.priceUSD {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: #929292;
+  margin: 0;
+  padding-bottom: 0.5rem;
+}
+
+.purchaseBtn {
+  width: 100%;
+  height: 53px;
+  background: #ffffff;
+  color: black;
+  border: 1px solid #211e27;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 18px;
+  font-family: "Bai Jamjuree";
+}
+
+.modalContent {
+  max-width: 800px !important;
+
+  background-color: #18151e !important;
+  border: 1px solid #211e27;
+  border-radius: 25px !important;
+  padding: 1rem 0 2rem 0;
+}
+
+.modalHeader {
+  text-align: center;
+}
+
+.modalContentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.modalOverlay {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+}
+
+.modalBody {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 2rem;
+}
+
+.modalSubContainer {
+  width: 100%;
+  border: 1px solid #332f3a;
+  border-radius: 25px;
+  padding: 1rem;
+}
+
+.modalSubTextContainer {
+  width: 100%;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.modalTitle {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 25px;
+  color: #ffffff;
+}
+
+.modalSubtitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #b1b1b1;
+}
+
+.modalImage {
+  width: 163px;
+  height: 108.08px;
+  left: 326px;
+  top: 348px;
+
+  border: 1px solid #2b2b2b;
+  border-radius: 25px;
+}
+
+.modalBtn {
+  width: 222px !important;
+  height: 53px !important;
+  background: #ffffff !important;
+  border: 1px solid #211e27 !important;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.modalBtn2 {
+  width: 222px !important;
+  height: 53px !important;
+  border: 0.5px solid #f8f8f8 !important;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #f8f8f8;
+  background-color: transparent !important;
+}
+
+.modalInput {
+  width: 320px !important;
+  height: 52px !important;
+  border: 1px solid #332f3a !important;
+  border-radius: 15px !important;
+}
+
+.inputContainer {
+  align-items: flex-start !important;
+}
+
+.inputUnitContainer {
+  position: relative;
+}
+
+.inputUnit {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}

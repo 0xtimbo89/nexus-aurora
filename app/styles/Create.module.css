@@ -1,0 +1,267 @@
+.main {
+  position: relative;
+  min-height: 100vh;
+  padding: 6rem 6rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: #ffffff;
+  padding-bottom: 1rem;
+}
+
+.imageUploader {
+  width: 100%;
+  height: 140px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.imageUploader::-webkit-file-upload-button {
+  display: none;
+}
+
+.imageUploader[type="file"] {
+  color: transparent;
+}
+
+.imageUploaderText {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 3rem;
+  z-index: 1;
+  color: white;
+}
+
+.imageUploadContainer {
+  position: relative;
+  border: 3px solid #ffffff;
+  background: #18151e;
+  border: 1px solid #211e27;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  color: white;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.fileUploader {
+  width: 100%;
+  height: 595px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.fileUploader::-webkit-file-upload-button {
+  display: none;
+}
+
+.fileUploader[type="file"] {
+  color: transparent;
+}
+
+.fileUploaderText {
+  position: absolute;
+  top: 210px;
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 3rem;
+  z-index: 1;
+  color: white;
+  gap: 0.5rem;
+}
+
+.fileUploadContainer {
+  position: relative;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 31px;
+  border: 3px solid #ffffff;
+  background: #18151e;
+  border: 1px solid #211e27;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  color: white;
+  z-index: 0;
+  cursor: pointer;
+}
+
+.fileUploaderIcon {
+  width: 32px;
+  height: 35px;
+}
+
+.imageUploaderIcon {
+  width: 20px;
+  height: 25px;
+}
+
+.uploaderTitle {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 19px;
+  padding-top: 1rem;
+}
+
+.uploaderTitle2 {
+  font-size: 20px;
+  line-height: 19px;
+}
+
+.uploaderTitle3 {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  padding-top: 0.2rem;
+}
+
+.uploaderTitle4 {
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.uploaderSubtitle {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+  color: #6f6f6f;
+}
+
+.previewImageContainer {
+  position: relative;
+}
+
+.inputContainer {
+  width: 100%;
+  align-items: flex-start !important;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.inputUnit {
+  position: absolute;
+  top: 53%;
+  right: 1.5rem;
+  font-weight: 500;
+  color: #5a5a5a;
+}
+
+.inputHeader {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 20px;
+  color: #ffffff;
+}
+
+.input {
+  width: 550px !important;
+  height: 50px !important;
+  padding: 0.5rem;
+  border-radius: 15px !important;
+  border: 1px solid rgb(255, 255, 255, 0.2) !important;
+  outline: none;
+}
+
+.subinput {
+  width: 250px !important;
+  height: 50px !important;
+  padding: 0.5rem;
+  border-radius: 15px !important;
+  border: 1px solid rgb(255, 255, 255, 0.2) !important;
+  outline: none;
+}
+
+.input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.inputDescription {
+  width: 550px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 31px;
+  color: #939393;
+}
+
+.inputBox {
+  width: 550px;
+  height: 75px;
+  padding: 1rem;
+  border-radius: 15px;
+  border: 1px solid rgb(255, 255, 255, 0.2) !important;
+}
+
+.inputSubcontainer {
+  align-items: flex-start !important;
+}
+
+.purchaseBtn {
+  width: 100%;
+  height: 50px !important;
+  background: #ffffff;
+  color: black;
+  border: 1px solid #211e27;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 18px;
+  font-family: "Bai Jamjuree";
+}
+
+.modalBtn {
+  width: 222px !important;
+  height: 53px !important;
+  background: #ffffff !important;
+  border: 1px solid #211e27 !important;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.modalBtn2 {
+  width: 222px !important;
+  height: 53px !important;
+  border: 0.5px solid #f8f8f8 !important;
+  border-radius: 10px !important;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #f8f8f8;
+  background-color: transparent !important;
+}

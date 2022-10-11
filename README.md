@@ -1,5 +1,9 @@
 # Nexus: A CSC-Native Metaverse Marketplace
 
+This project was built as a submission to the MetaFi CoinEx Smart Challenge 2022.
+
+![landing image](app/public/landing.png)
+
 ### Context
 
 According to experts, the metaverse industry is expected to be worth between 3 to 12 trillion dollars by 2030. However, the problem with the current metaverse space is that digital assets available in each metaverse are confined to that environment due to the centralized nature of their storage. Now what do I mean by that? So if there’s metaverse A and B, and metaverse A goes out of business, a user cannot simply migrate the assets they owned from metaverse A to metaverse B because the two environments don’t have a shared storage state.

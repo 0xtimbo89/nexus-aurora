@@ -47,11 +47,7 @@ function Collection() {
         <HStack className={styles.statsContainer}>
           <HStack>
             <Text className={styles.attribute}>Total volume</Text>
-            <Image
-              alt="klaytn"
-              src="/klaytn.png"
-              className={styles.klaytn}
-            ></Image>
+            <Image alt="csc" src="/csc.png" className={styles.csc}></Image>
             <Text className={styles.attributeBold}>
               <Text fontWeight={700} as="span">
                 4819
@@ -61,11 +57,7 @@ function Collection() {
           </HStack>
           <HStack>
             <Text className={styles.attribute}>Floor price</Text>
-            <Image
-              alt="klaytn"
-              src="/klaytn.png"
-              className={styles.klaytn}
-            ></Image>
+            <Image alt="csc" src="/csc.png" className={styles.csc}></Image>
             <Text>
               <Text fontWeight={700} as="span">
                 0.2
@@ -95,7 +87,7 @@ function Collection() {
             key={idx}
             image={image}
             title={name}
-            subtitle={`Listing ${listing} KLAY`}
+            subtitle={`Listing ${listing} CET`}
             link="/collection/0x7d3bc6b5de22a9bf0fd0c86954f42021736d4532/1"
           />
         ))}

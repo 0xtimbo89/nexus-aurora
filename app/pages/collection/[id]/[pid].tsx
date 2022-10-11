@@ -37,7 +37,7 @@ const details = [
   },
   {
     title: "Blockchain",
-    subtitle: "KLAYTN",
+    subtitle: "CSC",
   },
   {
     title: "Model",
@@ -50,9 +50,9 @@ const details = [
     link: "/",
   },
   {
-    title: "View on KlaytnFinder",
+    title: "View on CSC Explorer",
     subtitle: "",
-    link: "https://www.klaytnfinder.io/account/0x7d3bc6b5de22a9bf0fd0c86954f42021736d4532",
+    link: "https://testnet.coinex.net/address/0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca",
   },
 ];
 
@@ -108,9 +108,7 @@ function TradeModal({ isOpen, onClose, isSell }: ModalProps) {
                     </Text>
                   </VStack>
                   <VStack alignItems="flex-end">
-                    <Text className={styles.modalTitle}>
-                      {asset.price} KLAY
-                    </Text>
+                    <Text className={styles.modalTitle}>{asset.price} CET</Text>
                     <Text className={styles.modalSubtitle}>
                       ${asset.fiat} USD
                     </Text>
@@ -165,9 +163,7 @@ function TradeModal({ isOpen, onClose, isSell }: ModalProps) {
                     </Text>
                   </VStack>
                   <VStack alignItems="flex-end">
-                    <Text className={styles.modalTitle}>
-                      {asset.price} KLAY
-                    </Text>
+                    <Text className={styles.modalTitle}>{asset.price} CET</Text>
                     <Text className={styles.modalSubtitle}>
                       ${asset.fiat} USD
                     </Text>
@@ -212,9 +208,7 @@ function TradeModal({ isOpen, onClose, isSell }: ModalProps) {
                 </VStack>
                 {!isSell && (
                   <VStack alignItems="flex-end">
-                    <Text className={styles.modalTitle}>
-                      {asset.price} KLAY
-                    </Text>
+                    <Text className={styles.modalTitle}>{asset.price} CET</Text>
                     <Text className={styles.modalSubtitle}>
                       ${asset.fiat} USD
                     </Text>
@@ -233,7 +227,7 @@ function TradeModal({ isOpen, onClose, isSell }: ModalProps) {
                   <Text className={styles.modalTitle}>Price</Text>
                   <VStack className={styles.inputUnitContainer}>
                     <Input type="number" className={styles.modalInput}></Input>
-                    <Text className={styles.inputUnit}>KLAY</Text>
+                    <Text className={styles.inputUnit}>CET</Text>
                   </VStack>
                 </VStack>
                 <VStack className={styles.inputContainer}>
@@ -392,7 +386,7 @@ function Asset() {
             </Text>
             {isOwner && <Box h=".5rem"></Box>}
             {!isOwner && (
-              <Text className={styles.priceTag}>{asset.price} KLAY</Text>
+              <Text className={styles.priceTag}>{asset.price} CET</Text>
             )}
             {!isOwner && (
               <Text className={styles.priceUSD}>${asset.fiat} USD</Text>

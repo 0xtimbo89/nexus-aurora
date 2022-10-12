@@ -50,7 +50,7 @@ function Collection() {
             <Image alt="csc" src="/csc.png" className={styles.csc}></Image>
             <Text className={styles.attributeBold}>
               <Text fontWeight={700} as="span">
-                4819
+                4.8M
               </Text>{" "}
               ·
             </Text>
@@ -60,7 +60,7 @@ function Collection() {
             <Image alt="csc" src="/csc.png" className={styles.csc}></Image>
             <Text>
               <Text fontWeight={700} as="span">
-                0.2
+                193.23
               </Text>{" "}
               ·
             </Text>

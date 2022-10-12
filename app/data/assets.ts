@@ -179,7 +179,7 @@ export const collectionAssets = [
   },
   {
     name: "SF Light - Fighter 12",
-    listing: 193.23,
+    listing: 205.23,
     image: "/21.png",
   },
   {
@@ -194,22 +194,40 @@ export const collectionAssets = [
   },
   {
     name: "SF Heavy - Fighter 2209",
-    listing: 193.23,
+    listing: 948.2,
     image: "/24.png",
   },
   {
     name: "SF Light - Fighter 812",
-    listing: 193.23,
+    listing: 1023.23,
     image: "/25.png",
   },
   {
     name: "SF Heavy - Fighter 183",
-    listing: 193.23,
+    listing: 384.23,
     image: "/26.png",
   },
   {
     name: "SF Light - Fighter 744",
-    listing: 193.23,
+    listing: 722.23,
     image: "/27.png",
+  },
+];
+
+export const myAssets = [
+  {
+    name: "SF Light - Fighter 291",
+    listing: "Unlisted",
+    image: "/20.png",
+  },
+  {
+    name: "Ultra Motorbikes - 9394",
+    listing: 103.23,
+    image: "/30.png",
+  },
+  {
+    name: "Star Wars - X Wing Starfighter 3",
+    listing: 19.23,
+    image: "/31.png",
   },
 ];

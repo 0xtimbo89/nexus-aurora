@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "@styles/Navbar.module.css";
 import { HStack, Image, Text } from "@chakra-ui/react";
-import { ConnectKitButton } from "connectkit";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
 
 const Navbar = () => {
@@ -18,7 +18,7 @@ const Navbar = () => {
         ></Image>
       </Link>
       <HStack className={styles.navLeftSection}>
-        <ConnectKitButton />
+        <ConnectButton />
       </HStack>
     </HStack>
   );

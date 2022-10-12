@@ -1,0 +1,14 @@
+{
+  "name": "Kirby",
+  "description": "Kirby is a small, pink, spherical creature who has the ability to inhale objects and creatures to gain their powers. He is often called upon to save his home world of Dream Land from various villains.",
+  "collection": "Nexus Protocol Collection 3",
+  "image_url": "https://bafybeie6rfxujzadhx5t3ofso6sckg33jknl5vhobmgby7uetpmbzaojvm.ipfs.w3s.link/preview.png",
+  "animation_url": "https://bafybeicegfiiccusrwdyn3yut5temunjejordfmktyedjkumafwmd3ixpa.ipfs.w3s.link/kirby.glb",
+  "model_url": "https://bafybeicegfiiccusrwdyn3yut5temunjejordfmktyedjkumafwmd3ixpa.ipfs.w3s.link/kirby.glb",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Pink"
+    }
+  ]
+}

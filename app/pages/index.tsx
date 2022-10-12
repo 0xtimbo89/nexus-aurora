@@ -57,7 +57,7 @@ const Home: NextPage = () => {
                   SF Light - Fighter X6
                 </Text>
                 <Text className={styles.landingImageCaptionSubtitle2}>
-                  Floor: 8 CET
+                  Floor: 193.23 CET
                 </Text>
               </VStack>
             </VStack>
@@ -165,8 +165,8 @@ const Home: NextPage = () => {
                             <Text>{collection}</Text>
                           </HStack>
                         </Td>
-                        <Td className={styles.tableCell}>{floor} ETH</Td>
-                        <Td className={styles.tableCell}>{volume} ETH</Td>
+                        <Td className={styles.tableCell}>{floor} CET</Td>
+                        <Td className={styles.tableCell}>{volume} CET</Td>
                       </Tr>
                     ))}
                 </Tbody>

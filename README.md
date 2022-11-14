@@ -2,7 +2,7 @@
 
 This project was built as a submission to the TRON Grand Hackathon Season 3.
 
-![landing image](app/public/landing.png)
+![landing image](app/public/hero.png)
 
 ### Context
 

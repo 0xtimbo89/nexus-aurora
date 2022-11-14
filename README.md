@@ -12,7 +12,7 @@ According to experts, the metaverse industry is expected to be worth between 3 t
 
 This is why we believe all metaverse assets in the future will be hosted as non-fungible tokens tied to a blockchain. By doing so, assets will be interoperable across all metaverses and have their ownership verifiable on-chain.
 
-We believe CoinEx Smart Chain has the potential to be the blockchain to power metaverses in the future due to its high-efficiency and low-cost environment to store digital assets.
+We believe TRON blockchain has the potential to be the blockchain to power metaverses in the future due to its high-efficiency and low-cost environment to store digital assets.
 
 Now in this future, what if there was a single place that anyone across any metaverse can come create and trade their digital assets with others? We believe in order for creators and game developers to easily create 3D assets for the metaverse, there must be a platform that allows them to create, trade, and showcase their assets in a seamless manner.
 

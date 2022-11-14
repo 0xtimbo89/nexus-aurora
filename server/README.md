@@ -2,7 +2,7 @@
 
 `GET https://nexus-api-v1.onrender.com/assets/:address`
 
-This endpoint returns a set of assets based on the specified user CSC address.
+This endpoint returns a set of assets based on the specified user TRON address.
 
 The endpoint will return the following fields:
 
@@ -47,7 +47,7 @@ Example JSON blob:
 
 ```javascript
 useEffect(async () => {
-    const assets = await axios.get("https://nexus-api.io/api/v1/assets/0x374820e5eaDa35C73bAf425b6747a4219c37f2BC");
+    const assets = await axios.get("https://nexus-api.io/api/v1/assets/TSiY1b9bXh6ERoFeascqLEtXdiQxVNQnK7");
     const assetModelUrl = assets[0].model_url;
     const assetModel = await axios.get(assetModelUrl);
     setFetchedModel(assetModel); // gltf or glb file

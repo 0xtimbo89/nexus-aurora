@@ -1,12 +1,12 @@
-# Nexus: A CSC-Native Metaverse Marketplace
+# Nexus: A TRON-Native Metaverse Marketplace
 
-This project was built as a submission to the MetaFi CoinEx Smart Challenge 2022.
+This project was built as a submission to the TRON Grand Hackathon Season 3.
 
 ![landing image](app/public/landing.png)
 
 ### Context
 
-According to experts, the metaverse industry is expected to be worth between 3 to 12 trillion dollars by 2030. However, the problem with the current metaverse space is that digital assets available in each metaverse are confined to that environment due to the centralized nature of their storage. Now what do I mean by that? So if there’s metaverse A and B, and metaverse A goes out of business, a user cannot simply migrate the assets they owned from metaverse A to metaverse B because the two environments don’t have a shared storage state.
+According to experts, the metaverse industry is expected to be worth between 3 to 12 trillion dollars by 2030. However, the problem with the current metaverse space is that digital assets available in each metaverse are confined to that environment due to the centralized nature of their storage. Now what do I mean by that? So if there’s metaverse A and B, and metaverse A goes down, a user cannot simply migrate the assets they owned from metaverse A to metaverse B because the two environments don’t have a shared storage state.
 
 ### Problem
 
@@ -18,7 +18,7 @@ Now in this future, what if there was a single place that anyone across any meta
 
 ### Vision
 
-This is why we've built Nexus. A CSC-native 3D asset marketplace for users in the metaverse to seamlessly create, trade, and showcase their 3D metaverse assets.
+This is why we've built Nexus. A TRON-native 3D asset marketplace for users in the metaverse to seamlessly create, trade, and showcase their 3D metaverse assets.
 
 Some of the features include but are not limited to:
 
@@ -27,7 +27,7 @@ Some of the features include but are not limited to:
 - Seamless buying and selling of 3D NFTs
 - Well-documented API to integrated Nexus 3D NFTs into any metaverse
 
-The vision of Nexus is to become the one-stop shop to serve all CSC-based metaverse platforms for their on-chain asset needs. We are extremely excited to showcase this prototype and would love to hear feedback from the CSC core team.
+The vision of Nexus is to become the one-stop shop to serve all TRON-based metaverse platforms for their on-chain asset needs. We are extremely excited to showcase this prototype and would love to hear feedback from the TRON core team.
 
 ### Next Steps
 
@@ -37,5 +37,5 @@ The vision of Nexus is to become the one-stop shop to serve all CSC-based metave
 - Adding NFT analytics (price appraisal, floor price tracking)
 - Adding advanced trading options (limit trades, auctions)
 - Adding social features (follow, like, comment on assets)
-- Creating an interoperable 3D NFT metadata standard for CSC
+- Creating an interoperable 3D NFT metadata standard for TRON
 - Support for dynamic 3D NFTs that evolve with on-chain data

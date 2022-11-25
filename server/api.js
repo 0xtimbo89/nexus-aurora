@@ -1,8 +1,39 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
+const port = 8888;
+
+const db = require("./firebase.js");
+const {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  setDoc,
+  updateDoc,
+} = require("firebase/firestore");
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.get("/", function (req, res) {
   res.send("Hello World");
+});
+
+app.get("/price/:symbol", async function (req, res) {
+  const { symbol } = req.params;
+
+  const response = await fetch(
+    `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}&convert=USD`
+  );
+
+  const data = await response.json();
+
+  const price = data.data[symbol].quote["USD"].price;
+
+  res.send({ price: price });
 });
 
 app.get("/assets/:address", function (req, res) {
@@ -63,4 +94,6 @@ app.get("/assets/:address", function (req, res) {
   });
 });
 
-app.listen(3300);
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

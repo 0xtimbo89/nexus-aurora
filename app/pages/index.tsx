@@ -24,9 +24,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
-const collectionAddress =
-  process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS ??
-  "TJXL51C7YCNstnepHHW6cKo6RU4ebCwEZk";
+const collectionAddress = "TJXL51C7YCNstnepHHW6cKo6RU4ebCwEZk";
 
 const Home: NextPage = () => {
   const router = useRouter();

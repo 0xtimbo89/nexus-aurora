@@ -1,6 +1,6 @@
 # Nexus Protocol API V1
 
-`GET https://nexus-api-v1.onrender.com/assets/:address`
+`GET https://nexus-server-kt42.onrender.com/uesrs/:address/assets`
 
 This endpoint returns a set of assets based on the specified user TRON address.
 
@@ -23,6 +23,8 @@ An `asset` is defined by the following fields:
 |    model_url     |           URL hosting asset 3D model            |
 |  animation_url   | URL hosting asset 3D model (Opensea compatible) |
 |    properties    |           Attributes describing asset           |
+
+Sample request: [/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets](https://nexus-server-kt42.onrender.com/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets)
 
 Example JSON blob:
 

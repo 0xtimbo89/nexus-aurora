@@ -16,3 +16,8 @@
 .navLeftSection {
   gap: 1rem;
 }
+
+.connectButton {
+  min-width: 150px !important;
+  background-color: transparent !important;
+}

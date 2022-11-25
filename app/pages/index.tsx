@@ -18,11 +18,27 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import { categories, featured, games, trendingAssets } from "../data/assets";
+import React from "react";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+
+const collectionAddress =
+  process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS ??
+  "TJXL51C7YCNstnepHHW6cKo6RU4ebCwEZk";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  function handleClick(link: string) {
+    router.push(link);
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        <ToastContainer />
         <HStack className={styles.landingContainer}>
           <VStack className={styles.landingTextContainer}>
             <Text className={styles.landingTitle}>
@@ -30,7 +46,7 @@ const Home: NextPage = () => {
             </Text>
             <Text className={styles.landingSubtitle}>
               Nexus is the world’s first metaverse-focused marketplace built on
-              the CoinEx Smart Chain
+              the TRON Blockchain
             </Text>
             <HStack>
               <Link href="/explore">
@@ -41,7 +57,7 @@ const Home: NextPage = () => {
               </Link>
             </HStack>
           </VStack>
-          <Link href={`/collection/0x7d3bc6b5de22a9bf0fd0c86954f42021736d4532`}>
+          <Link href={`/collection/${collectionAddress}`}>
             <VStack
               w="550px"
               className={styles.landingImageContainer}
@@ -54,10 +70,10 @@ const Home: NextPage = () => {
               ></Image>
               <VStack className={styles.landingImageCaption}>
                 <Text className={styles.landingImageCaptionTitle2}>
-                  SF Light - Fighter X6
+                  Space Fighters (3rd Edition)
                 </Text>
                 <Text className={styles.landingImageCaptionSubtitle2}>
-                  Floor: 193.23 CET
+                  Floor: 150.00 TRX
                 </Text>
               </VStack>
             </VStack>
@@ -74,7 +90,12 @@ const Home: NextPage = () => {
           </HStack>
           <HStack w="100%">
             {featured.map(({ image, name, floor }, idx) => (
-              <VStack className={styles.categoryContainer} key={idx}>
+              <VStack
+                className={styles.categoryContainer}
+                cursor="pointer"
+                key={idx}
+                onClick={() => handleClick("/explore")}
+              >
                 <Image
                   alt="image alt"
                   src={image}
@@ -85,7 +106,7 @@ const Home: NextPage = () => {
                     {name}
                   </Text>
                   <Text className={styles.landingImageCaptionSubtitle}>
-                    Floor: {floor} CET
+                    Floor: {floor} TRX
                   </Text>
                 </VStack>
               </VStack>
@@ -114,7 +135,7 @@ const Home: NextPage = () => {
                     .map(({ rank, image, collection, floor, volume }: any) => (
                       <Tr
                         key={rank}
-                        onClick={() => {}}
+                        onClick={() => handleClick("/explore")}
                         className={styles.rowContainer}
                       >
                         <Td className={styles.tableCell}>{rank}</Td>
@@ -128,8 +149,8 @@ const Home: NextPage = () => {
                             <Text>{collection}</Text>
                           </HStack>
                         </Td>
-                        <Td className={styles.tableCell}>{floor} CET</Td>
-                        <Td className={styles.tableCell}>{volume}M CET</Td>
+                        <Td className={styles.tableCell}>{floor} TRX</Td>
+                        <Td className={styles.tableCell}>{volume}M TRX</Td>
                       </Tr>
                     ))}
                 </Tbody>
@@ -165,8 +186,8 @@ const Home: NextPage = () => {
                             <Text>{collection}</Text>
                           </HStack>
                         </Td>
-                        <Td className={styles.tableCell}>{floor} CET</Td>
-                        <Td className={styles.tableCell}>{volume} CET</Td>
+                        <Td className={styles.tableCell}>{floor} TRX</Td>
+                        <Td className={styles.tableCell}>{volume} TRX</Td>
                       </Tr>
                     ))}
                 </Tbody>
@@ -179,8 +200,8 @@ const Home: NextPage = () => {
             <Text className={styles.sectionTitle}>Game spotlight</Text>
           </HStack>
           <HStack w="100%">
-            {games.map(({ image, name }, idx) => (
-              <Link href="/explore" key={idx}>
+            {games.map(({ image, name, link }, idx) => (
+              <Link href={link} key={idx}>
                 <VStack className={styles.categoryContainer}>
                   <Image
                     alt="image alt"

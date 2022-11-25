@@ -1,0 +1,18 @@
+{
+  "name": "Journey: The Traveler",
+  "description": "Journey is a wordless story told through gameplay and visual-only cutscenes.",
+  "collection": "Journey",
+  "image_url": "https://bafybeifieiw6kixr5hwkri7sab7swftnhtyne3n3fsegwjinonoj3bedae.ipfs.w3s.link/j.png",
+  "animation_url": "https://bafybeid46oh33rrnedduwelusi2mikw6zliqwbuiztonhi253qtxqgfzya.ipfs.w3s.link/journey.glb",
+  "model_url": "https://bafybeid46oh33rrnedduwelusi2mikw6zliqwbuiztonhi253qtxqgfzya.ipfs.w3s.link/journey.glb",
+  "attributes": [
+    {
+      "trait_type": "Robe color",
+      "value": "Red"
+    },
+    {
+      "trait_type": "Skin color",
+      "value": "Black"
+    }
+  ]
+}

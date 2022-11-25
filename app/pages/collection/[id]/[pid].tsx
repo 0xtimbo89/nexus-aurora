@@ -6,488 +6,274 @@ import {
   SimpleGrid,
   Button,
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  Input,
   Link as ChakraLink,
   Spinner,
 } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import styles from "@styles/Asset.module.css";
-import { Canvas } from "@react-three/fiber";
-import { lazy, Suspense, useState } from "react";
-import { OrbitControls } from "@react-three/drei";
-import NexusProtocol from "@data/NexusProtocol.json";
-import { ethers } from "ethers";
-import { useAccount, usePrepareContractWrite, useContractWrite } from "wagmi";
-import Link from "next/link";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import TradeModal from "@components/TradeModal";
+import { useTron } from "@components/TronProvider";
+import { fetchAsset } from "@utils/web3";
+import { abridgeAddress } from "@utils/abridgeAddress";
+import Link from "next/link";
 
-const Kirby = lazy(() => import("@components/Kirby.js"));
-const Model = lazy(() => import("@components/Scene.js"));
-
-const details = [
-  {
-    title: "Contract address",
-    subtitle: "0x7d3bc6b5de22a9bf0fd0c86954f42021736d4532",
-  },
-  {
-    title: "Token ID",
-    subtitle: 291,
-  },
-  {
-    title: "Blockchain",
-    subtitle: "CSC",
-  },
-  {
-    title: "Model",
-    subtitle: "",
-    link: "/",
-  },
-  {
-    title: "IPFS Metadata",
-    subtitle: "",
-    link: "https://bafybeicaahj22pzqr5dqcxzwwlrps3oxpcyms34g6ddvocqsvfhphgiwwq.ipfs.w3s.link/3.json",
-  },
-  {
-    title: "View on CSC Explorer",
-    subtitle: "",
-    link: "https://testnet.coinex.net/address/0x42eAcf5b37540920914589a6B1b5e45d82D0C1ca",
-  },
-];
-
-const kirby = {
-  name: "Kirby",
-  description:
-    "Kirby is a small, pink, spherical creature who has the ability to inhale objects and creatures to gain their powers. He is often called upon to save his home world of Dream Land from various villains.",
-  collection: "Nexus Protocol Collection 3",
-  price: 193.23,
-  fiat: 7.73,
-};
-
-const asset = {
-  name: "SF Light - Fighter 291",
-  description:
-    "A space fighter is a small spacecraft designed for combat in space. They are typically equipped with weapons such as lasers and missiles, and are used to protect larger spacecraft or to attack enemy targets. Space fighters are agile and maneuverable, and can operate in both atmosphere and vacuum.",
-  collection: "Space Fighter Collection",
-  price: 193.23,
-  fiat: 7.73,
-};
-
-type ModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  isSell?: boolean;
-  pid: string;
-};
-
-function TradeModal({ isOpen, onClose, isSell, pid }: ModalProps) {
-  const { config } = usePrepareContractWrite({
-    addressOrName: "0xcb0BEd07B5ebD8E8e7aeb893a5091110a5658C5b",
-    contractInterface: NexusProtocol.abi,
-    functionName: "purchaseAsset",
-    args: ["0x3c38e8171B85dc03B8DBdDbE00df00D56029895C", 1],
-    overrides: {
-      value: ethers.utils.parseEther("10"),
-    },
-  });
-
-  const {
-    data: txnData,
-    isLoading,
-    isSuccess,
-    write: purchaseNFT,
-  } = useContractWrite(config);
-
-  if (isSuccess && !isSell) {
-    return (
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay className={styles.modalOverlay} />
-        <ModalContent className={styles.modalContent}>
-          <ModalHeader className={styles.modalHeader}>
-            Transaction Confirmation
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack>
-              <Text fontSize="20px">
-                Your purchase was successfully confirmed!
-              </Text>
-              <Box h="1rem"></Box>
-              <HStack className={styles.modalSubContainer}>
-                <Image
-                  alt="modal"
-                  src="/20.png"
-                  className={styles.modalImage}
-                ></Image>
-                <HStack className={styles.modalSubTextContainer}>
-                  <VStack alignItems="flex-start">
-                    <Text className={styles.modalTitle}>{asset.name}</Text>
-                    <Text className={styles.modalSubtitle}>
-                      {asset.collection}
-                    </Text>
-                  </VStack>
-                  <VStack alignItems="flex-end">
-                    <Text className={styles.modalTitle}>{asset.price} CET</Text>
-                    <Text className={styles.modalSubtitle}>
-                      ${(asset.price * 0.04).toFixed(2)} USD
-                    </Text>
-                  </VStack>
-                </HStack>
-              </HStack>
-              <Box h="1rem"></Box>
-              <HStack>
-                <Link href="/profile">
-                  <Button className={styles.modalBtn}>
-                    View your collection
-                  </Button>
-                </Link>
-                <ChakraLink
-                  href={
-                    txnData
-                      ? `https://testnet.coinex.net/tx/${txnData.hash}`
-                      : "https://testnet.coinex.net/tx/0x765cd806c4a62fdfe56be820487a9537d1125bc3ee2cc7c23ee3958ebffcb460"
-                  }
-                  isExternal
-                >
-                  <Button className={styles.modalBtn2}>View transaction</Button>
-                </ChakraLink>
-              </HStack>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    );
-  }
-
-  if (true) {
-    return (
-      <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay className={styles.modalOverlay} />
-        <ModalContent className={styles.modalContent}>
-          <ModalHeader className={styles.modalHeader}>
-            Transaction Confirmation
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <VStack>
-              <Text fontSize="20px">
-                Your listing was successfully created!
-              </Text>
-              <Box h="1rem"></Box>
-              {pid != "128" ? (
-                <HStack className={styles.modalSubContainer}>
-                  <Image
-                    alt="modal"
-                    src="/20.png"
-                    className={styles.modalImage}
-                  ></Image>
-                  <HStack className={styles.modalSubTextContainer}>
-                    <VStack alignItems="flex-start">
-                      <Text className={styles.modalTitle}>{asset.name}</Text>
-                      <Text className={styles.modalSubtitle}>
-                        {asset.collection}
-                      </Text>
-                    </VStack>
-                    {!isSell && (
-                      <VStack alignItems="flex-end">
-                        <Text className={styles.modalTitle}>10 CET</Text>
-                        <Text className={styles.modalSubtitle}>$0.4 USD</Text>
-                      </VStack>
-                    )}
-                  </HStack>
-                </HStack>
-              ) : (
-                <HStack className={styles.modalSubContainer}>
-                  <Image
-                    alt="modal"
-                    src="/kirby.png"
-                    className={styles.modalImage}
-                  ></Image>
-                  <HStack className={styles.modalSubTextContainer}>
-                    <VStack alignItems="flex-start">
-                      <Text className={styles.modalTitle}>{kirby.name}</Text>
-                      <Text className={styles.modalSubtitle}>
-                        {kirby.collection}
-                      </Text>
-                    </VStack>
-                    <VStack alignItems="flex-end">
-                      <Text className={styles.modalTitle}>10 CET</Text>
-                      <Text className={styles.modalSubtitle}>$0.4 USD</Text>
-                    </VStack>
-                  </HStack>
-                </HStack>
-              )}
-              <Box h="1rem"></Box>
-              <HStack>
-                <Button className={styles.modalBtn}>View transaction</Button>
-              </HStack>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    );
-  }
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
-      <ModalOverlay className={styles.modalOverlay} />
-      <ModalContent className={styles.modalContent}>
-        <ModalHeader className={styles.modalHeader}>
-          {isSell ? "Sell NFT" : "Purchase NFT"}
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <VStack>
-            {pid != "128" ? (
-              <HStack className={styles.modalSubContainer}>
-                <Image
-                  alt="modal"
-                  src="/20.png"
-                  className={styles.modalImage}
-                ></Image>
-                <HStack className={styles.modalSubTextContainer}>
-                  <VStack alignItems="flex-start">
-                    <Text className={styles.modalTitle}>{asset.name}</Text>
-                    <Text className={styles.modalSubtitle}>
-                      {asset.collection}
-                    </Text>
-                  </VStack>
-                  {!isSell && (
-                    <VStack alignItems="flex-end">
-                      <Text className={styles.modalTitle}>
-                        {asset.price} CET
-                      </Text>
-                      <Text className={styles.modalSubtitle}>
-                        ${(asset.price * 0.04).toFixed(2)} USD
-                      </Text>
-                    </VStack>
-                  )}
-                </HStack>
-              </HStack>
-            ) : (
-              <HStack className={styles.modalSubContainer}>
-                <Image
-                  alt="modal"
-                  src="/kirby.png"
-                  className={styles.modalImage}
-                ></Image>
-                <HStack className={styles.modalSubTextContainer}>
-                  <VStack alignItems="flex-start">
-                    <Text className={styles.modalTitle}>{kirby.name}</Text>
-                    <Text className={styles.modalSubtitle}>
-                      {kirby.collection}
-                    </Text>
-                  </VStack>
-                  {!isSell && (
-                    <VStack alignItems="flex-end">
-                      <Text className={styles.modalTitle}>
-                        {kirby.price} CET
-                      </Text>
-                      <Text className={styles.modalSubtitle}>
-                        ${kirby.fiat} USD
-                      </Text>
-                    </VStack>
-                  )}
-                </HStack>
-              </HStack>
-            )}
-            <Box h="1rem"></Box>
-            {isSell && (
-              <HStack
-                w="100%"
-                justifyContent="space-between"
-                p="0 1rem 2rem 1rem"
-              >
-                <VStack className={styles.inputContainer}>
-                  <Text className={styles.modalTitle}>Price</Text>
-                  <VStack className={styles.inputUnitContainer}>
-                    <Input type="number" className={styles.modalInput}></Input>
-                    <Text className={styles.inputUnit}>CET</Text>
-                  </VStack>
-                </VStack>
-                <VStack className={styles.inputContainer}>
-                  <Text className={styles.modalTitle}>Duration</Text>
-                  <VStack className={styles.inputUnitContainer}>
-                    <Input type="number" className={styles.modalInput}></Input>
-                    <Text className={styles.inputUnit}>days</Text>
-                  </VStack>
-                </VStack>
-              </HStack>
-            )}
-            <Button className={styles.modalBtn} onClick={() => purchaseNFT?.()}>
-              {isLoading ? (
-                <Spinner color="black" />
-              ) : isSell ? (
-                "Create listing"
-              ) : (
-                "Purchase NFT"
-              )}
-            </Button>
-          </VStack>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
-  );
-}
+const ModelWithNoSSR = dynamic(() => import("@components/Model"), {
+  ssr: false,
+});
 
 function Asset() {
   const router = useRouter();
+  const { address, provider } = useTron();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const isOwner = true;
+  const { id: collectionAddress, pid: tokenId } = router.query;
+  const [listingPriceBN, setListingPriceBN] = useState<number>();
+  const [listingPrice, setListingPrice] = useState<string>("");
+  const [tokenURI, setTokenURI] = useState<string>("");
+  const [metadata, setMetadata] = useState<any>();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [trxPrice, setTrxPrice] = useState<number>(0.0511);
+  const [seller, setSeller] = useState<string>("");
+  const [history, setHistory] = useState<any[]>([]);
+  const [collMetadata, setCollMetadata] = useState<any>();
 
-  const { pid } = router.query;
+  const fetchCollectionURI = useCallback(async () => {
+    if (!collectionAddress) return;
+    try {
+      const nftContract = await provider.contract().at(collectionAddress);
+      const collectionURI = await nftContract["getCollectionURI"]().call();
 
-  if (pid == undefined) return;
+      const response = await fetch(collectionURI);
+      const result = await response.json();
 
-  if (pid == "128") {
+      setCollMetadata(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [collectionAddress]);
+
+  const fetchTRXPrice = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:8888/utils/price/TRX");
+      const { price } = await response.json();
+      setTrxPrice(price);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const fetchAssetInfo = useCallback(async () => {
+    if (!collectionAddress || !tokenId) return;
+
+    const asset = await fetchAsset(
+      collectionAddress as string,
+      tokenId as string
+    );
+
+    if (!asset || !asset.history) {
+      setHistory([]);
+      return;
+    }
+
+    const sortedHistory = Object.values(asset.history).reverse();
+
+    if (asset) {
+      setHistory(sortedHistory);
+    }
+  }, [collectionAddress, tokenId]);
+
+  const fetchIsOwner = useCallback(async () => {
+    if (!collectionAddress) return;
+    try {
+      const nftContract = await provider.contract().at(collectionAddress);
+
+      const owner = await nftContract.ownerOf(tokenId).call();
+
+      const hexOwner = provider.address.toHex(address);
+
+      if (owner === hexOwner) {
+        setIsOwner(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, [collectionAddress]);
+
+  const fetchListingSeller = useCallback(async () => {
+    if (!collectionAddress) return;
+    try {
+      const nexusProtocol = await provider
+        .contract()
+        .at(process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS);
+
+      const fetchedSeller = await nexusProtocol
+        .getListingSeller(collectionAddress, tokenId)
+        .call();
+
+      setSeller(provider.address.fromHex(fetchedSeller));
+    } catch (e) {
+      console.log(e);
+    }
+  }, [collectionAddress]);
+
+  const fetchListingPrice = useCallback(async () => {
+    if (!collectionAddress) return;
+    try {
+      const nexusProtocol = await provider
+        .contract()
+        .at(process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS);
+
+      const hasListingResult = await nexusProtocol
+        .hasActiveListing(collectionAddress, tokenId)
+        .call();
+
+      const listingPriceNum = hasListingResult.toNumber() / 10 ** 6;
+
+      if (listingPriceNum === 0) {
+        setListingPrice("");
+        return;
+      }
+
+      const listingPriceStr = listingPriceNum.toFixed(2);
+
+      setListingPrice(listingPriceStr);
+      setListingPriceBN(hasListingResult.toNumber());
+    } catch (e) {
+      console.log(e);
+    }
+  }, [collectionAddress]);
+
+  const fetchTokenURI = useCallback(async () => {
+    if (!collectionAddress) return;
+    try {
+      const nftContract = await provider.contract().at(collectionAddress);
+
+      const uri = await nftContract["tokenURI"](tokenId).call();
+
+      const response = await fetch(uri);
+
+      const result = await response.json();
+
+      setTokenURI(uri);
+      setMetadata(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [collectionAddress, tokenId]);
+
+  useEffect(() => {
+    if (!collMetadata) {
+      fetchCollectionURI();
+    }
+    if (!trxPrice) {
+      fetchTRXPrice();
+    }
+    if (!isOwner) {
+      fetchIsOwner();
+    }
+    if (history.length === 0) {
+      fetchAssetInfo();
+    }
+    if (!listingPrice) {
+      fetchListingPrice();
+    }
+    if (!seller) {
+      fetchListingSeller();
+    }
+    if (!metadata) {
+      fetchTokenURI();
+    }
+  }, [fetchTRXPrice, fetchIsOwner, fetchListingPrice, fetchTokenURI]);
+
+  const assetDetails = useMemo(() => {
+    if (!collectionAddress || !metadata || !tokenURI) return [];
+    return [
+      {
+        title: "Contract address",
+        subtitle: collectionAddress,
+      },
+      {
+        title: "Token ID",
+        subtitle: tokenId,
+      },
+      {
+        title: "Blockchain",
+        subtitle: "TRON Shasta Testnet",
+      },
+      {
+        title: "Model",
+        link: metadata.model_url,
+      },
+      {
+        title: "IPFS Metadata",
+        link: tokenURI,
+      },
+      {
+        title: "View collection on Tronscan",
+        link: `https://shasta.tronscan.org/#/contract/${collectionAddress}/transactions`,
+      },
+    ];
+  }, [metadata, tokenURI]);
+
+  const listingPriceFiat = useMemo(
+    () => (trxPrice * Number(listingPrice)).toFixed(2),
+    [trxPrice, listingPrice]
+  );
+
+  const modelUrl = useMemo(() => {
+    if (!metadata) return "/kirby.png";
+    return metadata.model_url;
+  }, [metadata]);
+
+  const imageUrl = useMemo(() => {
+    if (!metadata) return "/kirby.png";
+    return metadata.image_url;
+  }, [metadata]);
+
+  const name = useMemo(() => {
+    if (!metadata) return "Kirby";
+    return metadata.name;
+  }, [metadata]);
+
+  const description = useMemo(() => {
+    if (!metadata) return "No description provided";
+    return metadata.description;
+  }, [metadata]);
+
+  const collection = useMemo(() => {
+    if (!metadata) return "Nexus Protocol Collection 3";
+    return metadata.collection;
+  }, [metadata]);
+
+  const attributes = useMemo(() => {
+    if (!metadata) return "Nexus Protocol Collection 3";
+    return metadata.attributes;
+  }, [metadata]);
+
+  if (!tokenId || !metadata)
     return (
       <VStack className={styles.main}>
-        <TradeModal
-          isOpen={isOpen}
-          onClose={onClose}
-          isSell={isOwner}
-          pid={pid}
-        />
-        <VStack
-          w="1000px"
-          h="500px"
-          borderRadius="20px"
-          overflow="hidden"
-          background={`url("/bg.jpg") no-repeat center center fixed`}
-        >
-          <Suspense fallback={null}>
-            <Canvas
-              camera={{
-                position: [10, 10, 10],
-                rotation: [0, 0, 0],
-              }}
-            >
-              <pointLight position={[50, 70, 50]} intensity={1} />
-              <pointLight position={[-50, 70, 50]} intensity={1} />
-              <rectAreaLight
-                width={3}
-                height={3}
-                color={"#fff"}
-                intensity={10}
-                position={[-2, 0, 5]}
-                lookAt={[0, 0, 0]}
-                penumbra={1}
-                castShadow
-              />
-
-              <Kirby />
-              {/* <Kirby position={[0, 0.5, 0]} /> */}
-              <OrbitControls />
-            </Canvas>
-          </Suspense>
-        </VStack>
-        <HStack alignItems="flex-start" gap="1rem" pt="1rem">
-          <VStack alignItems="flex-start">
-            <Text className={styles.title}>{kirby.name}</Text>
-            <Text className={styles.subtitle}>{kirby.description}</Text>
-            <VStack className={styles.minterContainer}>
-              <Text className={styles.minterTitle} m={0}>
-                Collection
-              </Text>
-              <HStack>
-                <Image
-                  alt="user"
-                  src="/favicon.ico"
-                  className={styles.minterImage}
-                ></Image>
-                <Text className={styles.minter}>{kirby.collection}</Text>
-              </HStack>
-            </VStack>
-            <VStack gap="1rem">
-              <VStack className={styles.sectionContainer}>
-                <VStack className={styles.sectionTitleContainer}>
-                  <Text className={styles.sectionTitle}>History</Text>
-                </VStack>
-                <HStack w="100%" pb="1rem">
-                  <HStack w="100%">
-                    <Image
-                      alt="user"
-                      src="/user.png"
-                      className={styles.historyImage}
-                    ></Image>
-                    <VStack className={styles.historyRightSection}>
-                      <Text m={0}>
-                        <Text as="span" className={styles.historyTitle}>
-                          0x3748...f2BC
-                        </Text>{" "}
-                        created this asset
-                      </Text>
-                      <Text className={styles.historySubtitle}>
-                        Saturday, October 8, 2022 at 08:47:25
-                      </Text>
-                    </VStack>
-                  </HStack>
-                </HStack>
-              </VStack>
-              <VStack className={styles.sectionContainer}>
-                <VStack className={styles.sectionTitleContainer}>
-                  <Text className={styles.sectionTitle}>Properties</Text>
-                </VStack>
-                <SimpleGrid columns={3} gap="1rem">
-                  <VStack className={styles.propertyCell}>
-                    <Text className={styles.propertyTitle}>Color</Text>
-                    <Text className={styles.propertySubtitle}>Pink</Text>
-                  </VStack>
-                </SimpleGrid>
-              </VStack>
-              <VStack className={styles.sectionContainer}>
-                <VStack className={styles.sectionTitleContainer}>
-                  <Text className={styles.sectionTitle}>Details</Text>
-                </VStack>
-                {details.map(({ title, subtitle, link }) => (
-                  <HStack key={title} className={styles.detailTextContainer}>
-                    <Text className={styles.detailTitle}>{title}</Text>
-                    {subtitle && (
-                      <Text className={styles.detailSubtitle}>{subtitle}</Text>
-                    )}
-                    {link && (
-                      <ChakraLink href={link} isExternal>
-                        <ExternalLinkIcon />
-                      </ChakraLink>
-                    )}
-                  </HStack>
-                ))}
-              </VStack>
-            </VStack>
-          </VStack>
-          <Box pt="1rem">
-            <VStack className={styles.priceContainer}>
-              <Text className={styles.priceTitle}>
-                {isOwner ? "Asset not for sale" : "Price"}
-              </Text>
-              {isOwner && <Box h=".5rem"></Box>}
-              {!isOwner && (
-                <Text className={styles.priceTag}>{asset.price} CET</Text>
-              )}
-              {!isOwner && (
-                <Text className={styles.priceUSD}>
-                  ${(asset.price * 0.04).toFixed(2)} USD
-                </Text>
-              )}
-              <Button className={styles.purchaseBtn} onClick={onOpen}>
-                {isOwner ? "Create listing" : "Purchase"}
-              </Button>
-            </VStack>
-          </Box>
-        </HStack>
+        <Spinner />
       </VStack>
     );
-  }
 
   return (
     <VStack className={styles.main}>
-      <TradeModal isOpen={isOpen} onClose={onClose} isSell={isOwner} />
+      <TradeModal
+        isOpen={isOpen}
+        onClose={onClose}
+        tokenId={tokenId as string}
+        collectionAddress={collectionAddress as string}
+        isOwner={isOwner}
+        listingPriceBN={listingPriceBN}
+        listingPrice={listingPrice}
+        trxPrice={trxPrice}
+        metadata={metadata}
+        seller={seller}
+      />
       <VStack
         w="1000px"
         h="500px"
@@ -495,129 +281,96 @@ function Asset() {
         overflow="hidden"
         background={`url("/bg.jpg") no-repeat center center fixed`}
       >
-        <Suspense fallback={null}>
-          <Canvas
-            camera={{
-              position: [-50, 100, 50],
-              rotation: [50, 50, 0],
-              far: 500,
-            }}
-          >
-            <pointLight position={[50, 70, 50]} intensity={10} />
-            <pointLight position={[-50, 70, 50]} intensity={10} />
-            <rectAreaLight
-              width={3}
-              height={3}
-              color={"#fff"}
-              intensity={54}
-              position={[-2, 0, 5]}
-              lookAt={[0, 0, 0]}
-              penumbra={1}
-              castShadow
-            />
-
-            <Model />
-            <OrbitControls />
-          </Canvas>
-        </Suspense>
+        <ModelWithNoSSR modelSrc={modelUrl} imageSrc={imageUrl} />
+        <Suspense fallback={null}></Suspense>
       </VStack>
       <HStack alignItems="flex-start" gap="1rem" pt="1rem">
         <VStack alignItems="flex-start">
-          <Text className={styles.title}>{asset.name}</Text>
-          <Text className={styles.subtitle}>{asset.description}</Text>
-          <VStack className={styles.minterContainer}>
-            <Text className={styles.minterTitle} m={0}>
-              Collection
-            </Text>
-            <HStack>
-              <Image
-                alt="user"
-                src="/fighter.png"
-                className={styles.minterImage}
-              ></Image>
-              <Text className={styles.minter}>{asset.collection}</Text>
-            </HStack>
-          </VStack>
+          <Text className={styles.title}>{name}</Text>
+          <Text className={styles.subtitle}>{description}</Text>
+          <Link href={`/collection/${collectionAddress}`}>
+            <VStack className={styles.minterContainer} cursor="pointer">
+              <Text className={styles.minterTitle} m={0}>
+                Collection
+              </Text>
+              <HStack>
+                <Image
+                  alt="user"
+                  src={collMetadata.image}
+                  className={styles.minterImage}
+                ></Image>
+                <Text className={styles.minter}>{collection}</Text>
+              </HStack>
+            </VStack>
+          </Link>
           <VStack gap="1rem">
             <VStack className={styles.sectionContainer}>
               <VStack className={styles.sectionTitleContainer}>
                 <Text className={styles.sectionTitle}>History</Text>
               </VStack>
-              {[184.29, 130.12, 93.09].map((num) => (
-                <HStack w="100%" key={num} pb="1rem">
-                  <HStack w="100%">
-                    <Image
-                      alt="user"
-                      src="/user.png"
-                      className={styles.historyImage}
-                    ></Image>
-                    <VStack className={styles.historyRightSection}>
-                      <Text m={0}>
-                        <Text as="span" className={styles.historyTitle}>
-                          0xfa87...a497
-                        </Text>{" "}
-                        set a new asking price
-                      </Text>
-                      <Text className={styles.historySubtitle}>
-                        Saturday, September 17, 2022 at 08:47:25
-                      </Text>
-                    </VStack>
-                  </HStack>
-                  <VStack className={styles.historyLeftSection}>
-                    <Text className={styles.historyTitle}>{num} CET</Text>
-                    <Text className={styles.historySubtitle}>
-                      ${(num * 0.04).toFixed(2)} USD
-                    </Text>
-                  </VStack>
-                </HStack>
-              ))}
+              {history.length > 0 ? (
+                <VStack w="100%" maxH="200px" overflowY="scroll">
+                  {history.map(
+                    ({ title, subtitle, address, price, fiatPrice }) => (
+                      <HStack w="100%" key={subtitle} pb="1rem">
+                        <HStack w="100%">
+                          <Image
+                            alt="user"
+                            src="/user.png"
+                            className={styles.historyImage}
+                          ></Image>
+                          <VStack className={styles.historyRightSection}>
+                            <Text m={0}>
+                              <Text as="span" className={styles.historyTitle}>
+                                {abridgeAddress(address)}
+                              </Text>{" "}
+                              {title}
+                            </Text>
+                            <Text className={styles.historySubtitle}>
+                              {subtitle}
+                            </Text>
+                          </VStack>
+                        </HStack>
+                        <VStack className={styles.historyLeftSection}>
+                          {price && (
+                            <Text className={styles.historyTitle}>
+                              {price} TRX
+                            </Text>
+                          )}
+                          {fiatPrice && (
+                            <Text className={styles.historySubtitle}>
+                              ${fiatPrice} USD
+                            </Text>
+                          )}
+                        </VStack>
+                      </HStack>
+                    )
+                  )}
+                </VStack>
+              ) : (
+                <Text className={styles.historySubtitle}>
+                  No history available
+                </Text>
+              )}
             </VStack>
             <VStack className={styles.sectionContainer}>
               <VStack className={styles.sectionTitleContainer}>
                 <Text className={styles.sectionTitle}>Properties</Text>
               </VStack>
               <SimpleGrid columns={3} gap="1rem">
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Background</Text>
-                  <Text className={styles.propertySubtitle}>Gray</Text>
-                </VStack>
-
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Material</Text>
-                  <Text className={styles.propertySubtitle}>
-                    Stainless steel
-                  </Text>
-                </VStack>
-
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Signature Tint</Text>
-                  <Text className={styles.propertySubtitle}>Red</Text>
-                </VStack>
-
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Weapon</Text>
-                  <Text className={styles.propertySubtitle}>
-                    Blaster cannon
-                  </Text>
-                </VStack>
-
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Origin</Text>
-                  <Text className={styles.propertySubtitle}>
-                    Galactic Empire
-                  </Text>
-                </VStack>
-                <VStack className={styles.propertyCell}>
-                  <Text className={styles.propertyTitle}>Model</Text>
-                  <Text className={styles.propertySubtitle}>T-70</Text>
-                </VStack>
+                {attributes.map(({ trait_type, value }, idx) => (
+                  <VStack className={styles.propertyCell} key={idx}>
+                    <Text className={styles.propertyTitle}>{trait_type}</Text>
+                    <Text className={styles.propertySubtitle}>{value}</Text>
+                  </VStack>
+                ))}
               </SimpleGrid>
             </VStack>
             <VStack className={styles.sectionContainer}>
               <VStack className={styles.sectionTitleContainer}>
                 <Text className={styles.sectionTitle}>Details</Text>
               </VStack>
-              {details.map(({ title, subtitle, link }) => (
+              {assetDetails.map(({ title, subtitle, link }) => (
                 <HStack key={title} className={styles.detailTextContainer}>
                   <Text className={styles.detailTitle}>{title}</Text>
                   {subtitle && (
@@ -634,21 +387,28 @@ function Asset() {
           </VStack>
         </VStack>
         <Box pt="1rem">
-          <VStack className={styles.priceContainer}>
-            <Text className={styles.priceTitle}>
-              {isOwner ? "Asset not for sale" : "Price"}
-            </Text>
-            {isOwner && <Box h=".5rem"></Box>}
-            {!isOwner && (
-              <Text className={styles.priceTag}>{asset.price} CET</Text>
-            )}
-            {!isOwner && (
-              <Text className={styles.priceUSD}>${asset.fiat} USD</Text>
-            )}
-            <Button className={styles.purchaseBtn} onClick={onOpen}>
-              {isOwner ? "Create listing" : "Purchase"}
-            </Button>
-          </VStack>
+          {!listingPrice ? (
+            <VStack className={styles.priceContainer}>
+              <Text className={styles.priceTitle}>Asset not for sale</Text>
+              {isOwner && (
+                <VStack w="100%">
+                  <Box h="0.2rem"></Box>
+                  <Button className={styles.purchaseBtn} onClick={onOpen}>
+                    Create listing
+                  </Button>
+                </VStack>
+              )}
+            </VStack>
+          ) : (
+            <VStack className={styles.priceContainer}>
+              <Text className={styles.priceTitle}>Price</Text>
+              <Text className={styles.priceTag}>{listingPrice} TRX</Text>
+              <Text className={styles.priceUSD}>${listingPriceFiat} USD</Text>
+              <Button className={styles.purchaseBtn} onClick={onOpen}>
+                {isOwner ? "Cancel listing" : "Purchase"}
+              </Button>
+            </VStack>
+          )}
         </Box>
       </HStack>
     </VStack>

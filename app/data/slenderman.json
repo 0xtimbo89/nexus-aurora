@@ -1,0 +1,18 @@
+{
+  "name": "Slenderman",
+  "description": "Slender Man is a fictional supernatural character that originated as a creepypasta Internet meme created by Something Awful forum user Eric Knudsen in 2009. He is depicted as a thin, unnaturally tall humanoid with a featureless head and face, wearing a black suit.",
+  "collection": "Slender Man: The Arrival",
+  "image_url": "https://bafybeidejois44ivxhy4uuseteavrihwir5scaxqy45m2d226ldguv4ppq.ipfs.w3s.link/slenderman.png",
+  "animation_url": "https://bafybeidwdjgp4ybpzzzbv4c4nhzkarmm7zk7ycyvwvhniaou37dhai4t3q.ipfs.w3s.link/slenderman.glb",
+  "model_url": "https://bafybeidwdjgp4ybpzzzbv4c4nhzkarmm7zk7ycyvwvhniaou37dhai4t3q.ipfs.w3s.link/slenderman.glb",
+  "attributes": [
+    {
+      "trait_type": "Outfit",
+      "value": "Suit"
+    },
+    {
+      "trait_type": "Skin color",
+      "value": "White"
+    }
+  ]
+}

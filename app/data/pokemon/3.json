@@ -1,0 +1,14 @@
+{
+  "name": "Lapras",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Space Fighters (3rd Edition)",
+  "image_url": "https://bafybeib2ojnepxplag66khtqppe66wbdy7tognhwrgl53x7cnm7sx7azri.ipfs.w3s.link/lapras.png",
+  "animation_url": "https://bafybeicjmfprfqiqvxhuynr2kejrj3wkbzrmzjssxurcz7nmjg6wfrivga.ipfs.w3s.link/pokemon_lapras.glb",
+  "model_url": "https://bafybeicjmfprfqiqvxhuynr2kejrj3wkbzrmzjssxurcz7nmjg6wfrivga.ipfs.w3s.link/pokemon_lapras.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Blue"
+    }
+  ]
+}

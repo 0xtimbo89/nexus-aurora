@@ -2,22 +2,22 @@ export const exploreAssets = [
   {
     image: "/mask.png",
     title: "SF Light- Fighter X6",
-    subtitle: "Floor: 8 CET",
+    subtitle: "Floor: 8 TRX",
   },
   {
     image: "/mask.png",
     title: "SF Light- Fighter X6",
-    subtitle: "Floor: 8 CET",
+    subtitle: "Floor: 8 TRX",
   },
   {
     image: "/mask.png",
     title: "SF Light- Fighter X6",
-    subtitle: "Floor: 8 CET",
+    subtitle: "Floor: 8 TRX",
   },
   {
     image: "/mask.png",
     title: "SF Light- Fighter X6",
-    subtitle: "Floor: 8 CET",
+    subtitle: "Floor: 8 TRX",
   },
 ];
 
@@ -98,14 +98,17 @@ export const games = [
   {
     name: "Journey",
     image: "/journey.png",
+    link: "/collection/TJPq4YNHnDidiEUm7woN6vsLXhdLUVT4bZ",
   },
   {
     name: "Slender Man: The Arrival",
     image: "/slenderman.png",
+    link: "/collection/TFYZNWX1vkv3wovsLcEkQMLeQBYfPMs2Ap",
   },
   {
     name: "Pokemon 2022 (Melee Ver.)",
     image: "/pokemon.png",
+    link: "/collection/TCbQV7iV7gTAXsLdVSxMruLzzWPffZPj4Y",
   },
 ];
 

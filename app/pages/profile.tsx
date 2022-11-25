@@ -1,56 +1,83 @@
 import { VStack, Image, HStack, Text, Box, SimpleGrid } from "@chakra-ui/react";
 import styles from "@styles/Profile.module.css";
 import ImageContainer from "@components/ImageContainer";
-import { exploreAssets } from "@data/assets";
-import { myAssets } from "../data/assets";
+import { useCallback, useEffect, useState } from "react";
+import { fetchUser } from "@utils/web3";
+import { useTron } from "@components/TronProvider";
 
 function Profile() {
+  const { address } = useTron();
+  const [assets, setAssets] = useState<any[]>([]);
+  const [date, setDate] = useState("");
+
+  const fetchUserInfo = useCallback(async () => {
+    if (!address) return [];
+    const user = await fetchUser(address as string);
+
+    const assetMetadata = Object.values(user.assets).map((asset: any) => {
+      const metadata = asset.metadata;
+      metadata.address = asset.address;
+      metadata.tokenId = asset.tokenId;
+      return metadata;
+    });
+
+    setDate(user.createdAt);
+    setAssets(assetMetadata);
+  }, [address]);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, [fetchUserInfo]);
+
   return (
     <VStack className={styles.main}>
       <VStack className={styles.collectionImageContainer}>
         <VStack className={styles.collectionCoverImageContainer}>
           <Image
             alt="cover"
-            src="/f.png"
+            src={"/nexus.jpg"}
             className={styles.collectionCoverImage}
           ></Image>
         </VStack>
         <Image
           alt="profile"
-          src="/images.png"
+          src="/user.png"
           className={styles.collectionProfileImage}
         ></Image>
       </VStack>
       <VStack className={styles.titleTextContainer}>
-        <Text className={styles.title}>0xtimboland</Text>
+        {/* <Text className={styles.title}>0xtimboland</Text> */}
         <HStack>
-          <Image
+          {/* <Image
             alt="user"
             src="/user.png"
             className={styles.userImage}
-          ></Image>
-          <Text className={styles.username}>0x3748...f2BC</Text>
+          ></Image> */}
+          {/* <Text className={styles.username}>
+            User {abridgeAddress(address)}
+          </Text> */}
+          <Text className={styles.username}>{address}</Text>
         </HStack>
-        <Text className={styles.subtitle}>
-          I am the ruthless NFT collector in the nexus neverland
-        </Text>
+        <Text className={styles.subtitle}>Joined on {date}</Text>
       </VStack>
       <Box className={styles.divider}></Box>
       <HStack className={styles.sectionTitleContainer}>
         <Text className={styles.sectionTitle}>3 items</Text>
       </HStack>
       <SimpleGrid columns={4} w="100%" gap="1rem">
-        {myAssets.map(({ image, name, listing }, idx) => (
-          <ImageContainer
-            key={idx}
-            image={image}
-            title={name}
-            subtitle={
-              listing === "Unlisted" ? listing : `Listing ${listing} CET`
-            }
-            link="/collection/1/1"
-          />
-        ))}
+        {assets.map(
+          ({ image_url, name, collection, address, tokenId }, idx) => (
+            <ImageContainer
+              key={idx}
+              image={image_url}
+              title={name}
+              subtitle={collection}
+              link={`/collection/${address}/${tokenId}`}
+              w="300px"
+              h="300px"
+            />
+          )
+        )}
       </SimpleGrid>
     </VStack>
   );

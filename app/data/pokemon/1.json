@@ -1,0 +1,14 @@
+{
+  "name": "Bulbasaur",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Pokemon 2022 (Melee Ver.)",
+  "image_url": "https://bafybeicdprjsb5yabt4b4yx3py57f4kpb3fleedpu2e7dyrac5znfid7me.ipfs.w3s.link/bulbasaur.png",
+  "animation_url": "https://bafybeibazebvqlixqhaeeiusqj42egiyfucm5jej3udpoc554v5dw62gha.ipfs.w3s.link/pokemon_bulbasaur.glb",
+  "model_url": "https://bafybeibazebvqlixqhaeeiusqj42egiyfucm5jej3udpoc554v5dw62gha.ipfs.w3s.link/pokemon_bulbasaur.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Green"
+    }
+  ]
+}

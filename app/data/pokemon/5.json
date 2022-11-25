@@ -1,0 +1,14 @@
+{
+  "name": "Zubat",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Pokemon 2022 (Melee Ver.)",
+  "image_url": "https://bafybeiggwaozaf6xax6mcb4lvrhnnvqoo6lw2c6nrzdij37j2a5acqeuty.ipfs.w3s.link/zubat.png",
+  "animation_url": "https://bafybeihs4vzezdbrbr6fcrckdypva63mqbn2dhva732b7vrnlj7e2mbfou.ipfs.w3s.link/pokemon_zubat.glb",
+  "model_url": "https://bafybeihs4vzezdbrbr6fcrckdypva63mqbn2dhva732b7vrnlj7e2mbfou.ipfs.w3s.link/pokemon_zubat.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Navy"
+    }
+  ]
+}

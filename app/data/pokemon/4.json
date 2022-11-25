@@ -1,0 +1,14 @@
+{
+  "name": "Geodude",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Pokemon 2022 (Melee Ver.)",
+  "image_url": "https://bafybeih2ohxkoa6vbtzvj55j27x3vwbglobpr5k3jg24x3hcc2gx37uhya.ipfs.w3s.link/geodude.png",
+  "animation_url": "https://bafybeiecvnxn35n7qr2mqt3qs6sqvieh5hrkwelprbrh2eclz44wkqisge.ipfs.w3s.link/pokemon_geodude.glb",
+  "model_url": "https://bafybeiecvnxn35n7qr2mqt3qs6sqvieh5hrkwelprbrh2eclz44wkqisge.ipfs.w3s.link/pokemon_geodude.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Gray"
+    }
+  ]
+}

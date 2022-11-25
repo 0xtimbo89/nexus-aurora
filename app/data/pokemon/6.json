@@ -1,0 +1,14 @@
+{
+  "name": "Mew",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Pokemon 2022 (Melee Ver.)",
+  "image_url": "https://bafybeighrzew2tpprviaincka7wdlbfvxck7qwiwu2tmmhkxl33rwrkgk4.ipfs.w3s.link/mew.png",
+  "animation_url": "https://bafybeibcojo3wxwfpzn3uqvtsuu7f7ud72c5hpry4aviaibuaygb3ndayi.ipfs.w3s.link/pokemon_mew.glb",
+  "model_url": "https://bafybeibcojo3wxwfpzn3uqvtsuu7f7ud72c5hpry4aviaibuaygb3ndayi.ipfs.w3s.link/pokemon_mew.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Pink"
+    }
+  ]
+}

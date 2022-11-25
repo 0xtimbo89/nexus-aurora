@@ -1,0 +1,34 @@
+{
+  "name": "SF Light - Fighter 92",
+  "description": "A space fighter is a small spacecraft designed for combat in space. They are typically equipped with weapons such as lasers and missiles, and are used to protect larger spacecraft or to attack enemy targets. Space fighters are agile and maneuverable, and can operate in both atmosphere and vacuum.",
+  "collection": "Space Fighters (3rd Edition)",
+  "image_url": "https://bafybeidwf2uhhcmyhx64umfi3hyahcppnmg5lar5fznibche6sgroxrox4.ipfs.w3s.link/10.png",
+  "animation_url": "https://bafybeiazddeyi5shl2afvd5j3kgb44mjahmozvxtxca347mxknbgh2du6e.ipfs.w3s.link/10_small.glb",
+  "model_url": "https://bafybeiazddeyi5shl2afvd5j3kgb44mjahmozvxtxca347mxknbgh2du6e.ipfs.w3s.link/10_small.glb",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Gray"
+    },
+    {
+      "trait_type": "Material",
+      "value": "Stainless steel"
+    },
+    {
+      "trait_type": "Signature Tint",
+      "value": "Red"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Blaster cannon"
+    },
+    {
+      "trait_type": "Origin",
+      "value": "Galactic Empire"
+    },
+    {
+      "trait_type": "Model",
+      "value": "T-92"
+    }
+  ]
+}

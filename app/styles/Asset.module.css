@@ -82,12 +82,14 @@
 }
 
 .historyRightSection {
+  min-width: 300px;
   align-items: flex-start !important;
 }
 
 .historyLeftSection {
   width: 100%;
   align-items: flex-end !important;
+  padding-right: 10px;
 }
 
 .propertyCell {

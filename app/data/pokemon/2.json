@@ -1,0 +1,14 @@
+{
+  "name": "Pikachu",
+  "description": "Pokémon are creatures of all shapes and sizes who live in the wild or alongside their human partners. During their adventures, Pokémon grow and become more experienced and even, on occasion, evolve into stronger Pokémon. Hundreds of known Pokémon inhabit the Pokémon universe, with untold numbers waiting to be discovered!",
+  "collection": "Pokemon 2022 (Melee Ver.)",
+  "image_url": "https://bafybeiah2kqiidm6i2tenoub2cm6yxdz2b7i2fq3cxdefaefv5jqbnvtj4.ipfs.w3s.link/pikachu.png",
+  "animation_url": "https://bafybeidcfzhydgibw2kxlenqaqckk4ygy6t4oiaj4xv5tseeyf7o3xtesa.ipfs.w3s.link/pokemon_pikachu.glb",
+  "model_url": "https://bafybeidcfzhydgibw2kxlenqaqckk4ygy6t4oiaj4xv5tseeyf7o3xtesa.ipfs.w3s.link/pokemon_pikachu.glb",
+  "attributes": [
+    {
+      "trait_type": "Color",
+      "value": "Yellow"
+    }
+  ]
+}

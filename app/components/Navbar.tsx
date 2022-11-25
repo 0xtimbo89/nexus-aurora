@@ -1,11 +1,21 @@
 import Link from "next/link";
 import styles from "@styles/Navbar.module.css";
-import { HStack, Image, Text } from "@chakra-ui/react";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount } from "wagmi";
+import { Box, Button, HStack, Image, Spinner, Text } from "@chakra-ui/react";
+import { useTron } from "./TronProvider";
+import { abridgeAddress } from "@utils/abridgeAddress";
+import { handleConnect, handleDisconnect } from "@utils/web3";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const { address } = useAccount();
+  const router = useRouter();
+  const { address, setAddress, provider } = useTron();
+  const [isHover, setIsHover] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  function handleNavigate() {
+    router.push("/");
+  }
 
   return (
     <HStack className={styles.navbar}>
@@ -18,7 +28,37 @@ const Navbar = () => {
         ></Image>
       </Link>
       <HStack className={styles.navLeftSection}>
-        <ConnectButton />
+        <Link href="/profile">
+          <Text cursor="pointer">My Profile</Text>
+        </Link>
+        <Box></Box>
+        {address ? (
+          <Button
+            className={styles.connectButton}
+            onClick={() =>
+              handleDisconnect(setLoading, setAddress, handleNavigate)
+            }
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+          >
+            {isLoading ? (
+              <Spinner color="white" />
+            ) : isHover ? (
+              "Disconnect"
+            ) : (
+              abridgeAddress(address)
+            )}
+          </Button>
+        ) : (
+          <Button
+            className={styles.connectButton}
+            onClick={() => handleConnect(setLoading, setAddress, provider)}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+          >
+            {isLoading ? <Spinner color="white" /> : "Connect TronLink"}
+          </Button>
+        )}
       </HStack>
     </HStack>
   );

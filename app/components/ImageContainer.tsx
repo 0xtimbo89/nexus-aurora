@@ -30,6 +30,8 @@ function ImageContainer({
         <Image
           alt="image alt"
           src={image}
+          w={w}
+          h={h}
           className={styles.landingImage}
         ></Image>
         <VStack className={styles.landingImageCaption}>

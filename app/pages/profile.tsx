@@ -4,6 +4,7 @@ import ImageContainer from "@components/ImageContainer";
 import { useCallback, useEffect, useState } from "react";
 import { fetchUser } from "@utils/web3";
 import { useTron } from "@components/TronProvider";
+import { abridgeAddress } from "@utils/abridgeAddress";
 
 function Profile() {
   const { address } = useTron();
@@ -14,20 +15,35 @@ function Profile() {
     if (!address) return [];
     const user = await fetchUser(address as string);
 
-    const assetMetadata = Object.values(user.assets).map((asset: any) => {
-      const metadata = asset.metadata;
-      metadata.address = asset.address;
-      metadata.tokenId = asset.tokenId;
-      return metadata;
-    });
+    if (user) {
+      const assetMetadata = Object.values(user.assets).map((asset: any) => {
+        const metadata = asset.metadata;
+        metadata.address = asset.address;
+        metadata.tokenId = asset.tokenId;
+        return metadata;
+      });
 
-    setDate(user.createdAt);
-    setAssets(assetMetadata);
+      setDate(user.createdAt);
+      setAssets(assetMetadata);
+    }
   }, [address]);
 
   useEffect(() => {
     fetchUserInfo();
   }, [fetchUserInfo]);
+
+  if (!address) {
+    return (
+      <VStack className={styles.main}>
+        <VStack w="100%">
+          <Text className={styles.title}>Oops! Wait a minute.</Text>
+          <Text className={styles.inputHeader}>
+            Please connect your wallet before you proceed.
+          </Text>
+        </VStack>
+      </VStack>
+    );
+  }
 
   return (
     <VStack className={styles.main}>
@@ -56,13 +72,13 @@ function Profile() {
           {/* <Text className={styles.username}>
             User {abridgeAddress(address)}
           </Text> */}
-          <Text className={styles.username}>{address}</Text>
+          <Text className={styles.username}>{abridgeAddress(address)}</Text>
         </HStack>
         <Text className={styles.subtitle}>Joined on {date}</Text>
       </VStack>
       <Box className={styles.divider}></Box>
       <HStack className={styles.sectionTitleContainer}>
-        <Text className={styles.sectionTitle}>3 items</Text>
+        <Text className={styles.sectionTitle}>{assets.length} items</Text>
       </HStack>
       <SimpleGrid columns={4} w="100%" gap="1rem">
         {assets.map(

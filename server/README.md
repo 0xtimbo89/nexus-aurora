@@ -1,8 +1,10 @@
 # Nexus Protocol API V1
 
-`GET https://nexus-server-kt42.onrender.com/uesrs/:address/assets`
+`GET https://nexus-server-kt42.onrender.com/users/:address/assets`
 
 This endpoint returns a set of assets based on the specified user TRON address.
+
+Sample request: [/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets](https://nexus-server-kt42.onrender.com/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets)
 
 The endpoint will return the following fields:
 
@@ -23,8 +25,6 @@ An `asset` is defined by the following fields:
 |    model_url     |           URL hosting asset 3D model            |
 |  animation_url   | URL hosting asset 3D model (Opensea compatible) |
 |    properties    |           Attributes describing asset           |
-
-Sample request: [/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets](https://nexus-server-kt42.onrender.com/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets)
 
 Example JSON blob:
 
@@ -49,7 +49,7 @@ Example JSON blob:
 
 ```javascript
 useEffect(async () => {
-    const assets = await axios.get("https://nexus-api.io/api/v1/assets/TSiY1b9bXh6ERoFeascqLEtXdiQxVNQnK7");
+    const assets = await axios.get("https://nexus-server-kt42.onrender.com//api/v1/assets/TSiY1b9bXh6ERoFeascqLEtXdiQxVNQnK7");
     const assetModelUrl = assets[0].model_url;
     const assetModel = await axios.get(assetModelUrl);
     setFetchedModel(assetModel); // gltf or glb file

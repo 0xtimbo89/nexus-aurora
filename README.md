@@ -22,20 +22,30 @@ This is why we've built Nexus. A TRON-native 3D asset marketplace for users in t
 
 Some of the features include but are not limited to:
 
-- No-code minting of 3D NFTs (metadata hosted on-chain via IPFS)
-- Showcasing of owned 3D NFT assets via user profiles
-- Seamless buying and selling of 3D NFTs
+- NFT Marketplace protocol for seamless buying and selling of 3D NFTs
+- No-code minting of 3D NFTs (metadata on decentralized storage via IPFS)
+- Interactive 3D model viewer to preview assets before purchase
+- Showcasing of user-owned 3D NFT assets via user profiles
 - Well-documented API to integrated Nexus 3D NFTs into any metaverse
 
 The vision of Nexus is to become the one-stop shop to serve all TRON-based metaverse platforms for their on-chain asset needs. We are extremely excited to showcase this prototype and would love to hear feedback from the TRON core team.
 
+### Deployed Contracts:
+
+- Nexus Protocol v1 (Shasta Tronscan: [TKiEgTFAkWKTqNy2NUBStofBETw8x8H9Rw](https://shasta.tronscan.org/#/contract/TKiEgTFAkWKTqNy2NUBStofBETw8x8H9Rw/code))
+- Nexus Collection 3 (Shasta Tronscan: [TVjHb2Sj5qA5kLEoNUJDksfZ1P2FXy7rNs]())
+
 ### Next Steps
 
-- Rigorous user testing and feedback with users
+This was a proof of concept built in the span of a month. But we are interested in continuing to pursue this project. Our next steps are as follows:
+
+- Integrate NFT indexer to showcase all 3D NFTs
+- Creating an interoperable 3D NFT metadata standard for TRON
+- Adding advanced trading options (limit trades, auctions)
+- Rigorous testing and feedback from TRON community
 - Adding programmatic batch minting NFTs
 - Support metaverse asset conversions (i.e. .gltf/.glb, .obj, .fbx)
 - Adding NFT analytics (price appraisal, floor price tracking)
-- Adding advanced trading options (limit trades, auctions)
 - Adding social features (follow, like, comment on assets)
-- Creating an interoperable 3D NFT metadata standard for TRON
 - Support for dynamic 3D NFTs that evolve with on-chain data
+- NFT verification feature to combat clone projects

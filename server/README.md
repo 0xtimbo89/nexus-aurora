@@ -2,9 +2,9 @@
 
 `GET https://nexus-server-kt42.onrender.com/users/:address/assets`
 
-This endpoint returns a set of assets based on the specified user TRON address.
+This endpoint returns a set of assets based on the specified user Aurora address.
 
-Sample request: [/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets](https://nexus-server-kt42.onrender.com/users/TQ86Usnvjj1Je6cdPwGv2VMDMbFm1zEac5/assets)
+Sample request: [/users/0x6B4583438C24839ea459e34e9F21aD419A846B0b/assets](https://nexus-server-kt42.onrender.com/users/0x6B4583438C24839ea459e34e9F21aD419A846B0b/assets)
 
 The endpoint will return the following fields:
 

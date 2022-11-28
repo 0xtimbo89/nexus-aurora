@@ -3,11 +3,11 @@ import styles from "@styles/Profile.module.css";
 import ImageContainer from "@components/ImageContainer";
 import { useCallback, useEffect, useState } from "react";
 import { fetchUser } from "@utils/web3";
-import { useTron } from "@components/TronProvider";
 import { abridgeAddress } from "@utils/abridgeAddress";
+import { useAccount } from "wagmi";
 
 function Profile() {
-  const { address } = useTron();
+  const { address } = useAccount();
   const [assets, setAssets] = useState<any[]>([]);
   const [date, setDate] = useState("");
 
@@ -80,7 +80,7 @@ function Profile() {
       <HStack className={styles.sectionTitleContainer}>
         <Text className={styles.sectionTitle}>{assets.length} items</Text>
       </HStack>
-      <SimpleGrid columns={4} w="100%" gap="1rem">
+      <SimpleGrid columns={4} w="95%" gap="1rem">
         {assets.map(
           ({ image_url, name, collection, address, tokenId }, idx) => (
             <ImageContainer

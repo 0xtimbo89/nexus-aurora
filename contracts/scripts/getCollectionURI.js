@@ -7,28 +7,19 @@
 const hre = require("hardhat");
 
 async function main() {
-  try {
-    const NexusProtocol = await hre.ethers.getContractFactory("NexusProtocol");
+  const NexusNFT = await hre.ethers.getContractFactory("NexusNFT");
 
-    const nexus = await NexusProtocol.attach(
-      process.env.NEXUS_CONTRACT_ADDRESS // deployed contract address
-    );
+  const nexusNFT = await NexusNFT.attach(
+    process.env.NFT_CONTRACT_ADDRESS // deployed contract address
+  );
 
-    console.log("MyNFT attached to:", nexus.address);
+  console.log("MyNFT attached to:", nexusNFT.address);
 
-    console.log("Creating listing...");
+  console.log("Setting collection URI...");
 
-    //   price: 0.001 ETH
-    const res = await nexus.createListing(
-      process.env.NFT_CONTRACT_ADDRESS,
-      2,
-      1000000000000000
-    );
+  const res = await nexusNFT.getCollectionURI();
 
-    console.log("listing created!", res);
-  } catch (err) {
-    console.log(err.message);
-  }
+  console.log("Fetched collection URI:", res);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

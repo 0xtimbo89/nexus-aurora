@@ -6,7 +6,7 @@ function Footer() {
     <HStack className={styles.footer}>
       {/* <Text color="rgba(255,255,255,0.6)">@ 2022 Nexus</Text>
       <Text color="rgba(255,255,255,0.6)">
-        Built with ♡ for TRON Grand Hackathon
+        Built with ♡ for NEAR MetaBuild III Hackathon
       </Text> */}
     </HStack>
   );

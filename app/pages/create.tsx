@@ -1,4 +1,3 @@
-import { AddIcon } from "@chakra-ui/icons";
 import {
   HStack,
   VStack,
@@ -15,9 +14,11 @@ import styles from "@styles/Create.module.css";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Web3Storage } from "web3.storage";
 import Link from "next/link";
-import { useTron } from "@components/TronProvider";
+import NexusNFT from "@data/NexusNFT.json";
 import { Metadata } from "@utils/types";
-import { addEvent, createAsset } from "@utils/web3";
+import { createAsset } from "@utils/web3";
+import { useAccount, useContractRead, useProvider, useSigner } from "wagmi";
+import { ethers } from "ethers";
 
 const WEB3_STORAGE_TOKEN = process.env.NEXT_PUBLIC_WEB3_STORAGE_API_KEY;
 
@@ -27,7 +28,8 @@ const client = new Web3Storage({
 });
 
 function Create() {
-  const { address, provider } = useTron();
+  const { address } = useAccount();
+  const { data: signer, isError } = useSigner();
   const [uploadedModel, setUploadedModel] = useState<any>();
   const [uploadedImage, setUploadedImage] = useState<Blob>();
   const [jsonCID, setJsonCID] = useState<string>("");
@@ -37,7 +39,6 @@ function Create() {
   const [trait, setTrait] = useState<string>("");
   const [value, setValue] = useState<string>("");
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [lastTokenId, setLastTokenId] = useState<number>(0);
 
   function handleModelUpload(e) {
     setUploadedModel(e.target.files[0]);
@@ -123,45 +124,35 @@ function Create() {
   }
 
   const NFT_ADDRESS = useMemo(
-    () => process.env.NEXT_PUBLIC_NEXUS_COLLECTION_ADDRESS ?? "",
+    () =>
+      process.env.NEXT_PUBLIC_NEXUS_COLLECTION_ADDRESS ??
+      "0x9D2a3158c9629a610e4885a23bcFD5B1ad8ca804",
     [process.env.NEXT_PUBLIC_NEXUS_COLLECTION_ADDRESS]
   );
 
-  const fetchLastTokenId = useCallback(async () => {
-    if (!NFT_ADDRESS) return;
-    try {
-      const nftContract = await provider.contract().at(NFT_ADDRESS);
-
-      const lastTokenId = await nftContract["getLastTokenId"]().call();
-
-      setLastTokenId(parseInt(lastTokenId, 10));
-    } catch (e) {
-      console.log(e);
-    }
-  }, [NFT_ADDRESS]);
+  const { data: lastTokenId } = useContractRead({
+    address:
+      process.env.NEXT_PUBLIC_NEXUS_COLLECTION_ADDRESS ??
+      "0x9D2a3158c9629a610e4885a23bcFD5B1ad8ca804",
+    abi: NexusNFT.abi,
+    functionName: "getLastTokenId",
+  });
 
   const handleMint = useCallback(
     async (cid: string) => {
       console.log("address:", address);
       console.log("NFT_ADDRESS:", NFT_ADDRESS);
       try {
-        const nftContract = await provider.contract().at(NFT_ADDRESS);
+        const contract = new ethers.Contract(NFT_ADDRESS, NexusNFT.abi, signer);
 
-        const nftResult = await nftContract
-          .mintWithTokenURI(address, cid)
-          .send({
-            feeLimit: 100_000_000,
-            callValue: 0,
-            shouldPollResponse: false,
-          });
-
-        setTxnHash(nftResult);
+        const nftResult = await contract.mintWithTokenURI(address, cid);
+        setTxnHash(nftResult.hash);
         return nftResult;
       } catch (e) {
         console.log(e);
       }
     },
-    [NFT_ADDRESS, address]
+    [NFT_ADDRESS, address, signer]
   );
 
   async function handleListAsset() {
@@ -173,7 +164,7 @@ function Create() {
     if (nftResult) {
       await createAsset(
         NFT_ADDRESS,
-        (lastTokenId + 1).toString(),
+        (parseInt(lastTokenId as string, 10) + 1).toString(),
         metadata,
         address
       );
@@ -182,14 +173,12 @@ function Create() {
     setLoading(false);
   }
 
-  useEffect(() => {
-    fetchLastTokenId();
-  }, []);
-
   const navigationLink = useMemo(
     () =>
       lastTokenId
-        ? `/collection/${NFT_ADDRESS}/${lastTokenId + 1}`
+        ? `/collection/${NFT_ADDRESS}/${
+            parseInt(lastTokenId as string, 10) + 1
+          }`
         : `/collection/${NFT_ADDRESS}`,
     [lastTokenId]
   );
@@ -230,7 +219,7 @@ function Create() {
               </Button>
             </Link>
             <ChakraLink
-              href={`https://shasta.tronscan.org/#/transaction/${txnHash}`}
+              href={`https://testnet.aurorascan.dev/tx/${txnHash}`}
               isExternal
             >
               <Button className={styles.modalBtn2} onClick={() => {}}>

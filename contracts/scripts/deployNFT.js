@@ -7,27 +7,20 @@
 const hre = require("hardhat");
 
 async function main() {
-  const MyNFT = await hre.ethers.getContractFactory("MyNFT");
+  const NexusNFT = await hre.ethers.getContractFactory("NexusNFT");
+  const nexusNFT = await NexusNFT.deploy();
 
-  const myNFT = await MyNFT.attach(
-    process.env.NFT_CONTRACT_ADDRESS // deployed contract address
-  );
+  console.log("deploying...");
 
-  console.log("MyNFT attached to:", myNFT.address);
+  await nexusNFT.deployed();
 
-  console.log("Setting approval for all...");
-
-  const res = await myNFT.setApprovalForAll(
-    process.env.NEXUS_CONTRACT_ADDRESS,
-    true
-  );
-
-  console.log("Approved!", res);
+  console.log(`Deployed successfully at: ${nexusNFT.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
   console.error(error);
+  console.log(error.message);
   process.exitCode = 1;
 });

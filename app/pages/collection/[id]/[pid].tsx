@@ -16,10 +16,13 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import TradeModal from "@components/TradeModal";
-import { useTron } from "@components/TronProvider";
-import { fetchAsset } from "@utils/web3";
+import NexusProtocol from "@data/NexusProtocol.json";
+import NexusNFT from "@data/NexusNFT.json";
+import { fetchAsset, fetchPrice } from "@utils/web3";
 import { abridgeAddress } from "@utils/abridgeAddress";
 import Link from "next/link";
+import { useAccount, useContractRead } from "wagmi";
+import { BigNumber, ethers } from "ethers";
 
 const ModelWithNoSSR = dynamic(() => import("@components/Model"), {
   ssr: false,
@@ -27,39 +30,91 @@ const ModelWithNoSSR = dynamic(() => import("@components/Model"), {
 
 function Asset() {
   const router = useRouter();
-  const { address, provider } = useTron();
+  const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id: collectionAddress, pid: tokenId } = router.query;
-  const [listingPriceBN, setListingPriceBN] = useState<number>();
-  const [listingPrice, setListingPrice] = useState<string>("");
-  const [tokenURI, setTokenURI] = useState<string>("");
   const [metadata, setMetadata] = useState<any>();
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [trxPrice, setTrxPrice] = useState<number>(0.0511);
-  const [seller, setSeller] = useState<string>("");
+  const [ethPrice, setEthPrice] = useState<number>(1220);
   const [history, setHistory] = useState<any[]>([]);
   const [collMetadata, setCollMetadata] = useState<any>();
 
-  const fetchCollectionURI = useCallback(async () => {
-    if (!collectionAddress) return;
+  const { data: URI } = useContractRead({
+    address:
+      (collectionAddress as string) ??
+      "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276",
+    abi: NexusNFT.abi,
+    functionName: "getCollectionURI",
+  });
+
+  const fetchCollection = useCallback(async () => {
+    if (!URI) return;
+    const response = await fetch(URI as string);
+    const result = await response.json();
+
+    setCollMetadata(result);
+  }, [URI]);
+
+  const { data: owner } = useContractRead({
+    address:
+      (collectionAddress as string) ??
+      "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276",
+    abi: NexusNFT.abi,
+    functionName: "ownerOf",
+    args: [tokenId ?? "1"],
+  });
+
+  const { data: seller } = useContractRead({
+    address:
+      process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS ??
+      "0xBf4833D115b92074168804589811eb5A36DaA67e",
+    abi: NexusProtocol.abi,
+    functionName: "getListingSeller",
+    args: [
+      (collectionAddress as string) ??
+        "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276",
+      tokenId ?? "1",
+    ],
+  });
+
+  const {
+    isError: hasNoListing,
+    error: hasNoListingError,
+    data: listingBN,
+  } = useContractRead({
+    address:
+      process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS ??
+      "0xBf4833D115b92074168804589811eb5A36DaA67e",
+    abi: NexusProtocol.abi,
+    functionName: "hasActiveListing",
+    args: [
+      (collectionAddress as string) ??
+        "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276",
+      tokenId ?? "1",
+    ],
+  });
+
+  const { data: tokenURI } = useContractRead({
+    address:
+      (collectionAddress as string) ??
+      "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276",
+    abi: NexusNFT.abi,
+    functionName: "tokenURI",
+    args: [tokenId ?? "1"],
+  });
+
+  const fetchToken = useCallback(async () => {
+    if (!tokenURI) return;
+    const response = await fetch(tokenURI as string);
+    const result = await response.json();
+
+    setMetadata(result);
+  }, [tokenURI]);
+
+  const fetchethPrice = useCallback(async () => {
     try {
-      const nftContract = await provider.contract().at(collectionAddress);
-      const collectionURI = await nftContract["getCollectionURI"]().call();
-
-      const response = await fetch(collectionURI);
-      const result = await response.json();
-
-      setCollMetadata(result);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionAddress]);
-
-  const fetchTRXPrice = useCallback(async () => {
-    try {
-      const response = await fetch("http://localhost:8888/utils/price/TRX");
+      const response = await fetchPrice();
       const { price } = await response.json();
-      setTrxPrice(price);
+      setEthPrice(price);
     } catch (e) {
       console.log(e);
     }
@@ -85,108 +140,20 @@ function Asset() {
     }
   }, [collectionAddress, tokenId]);
 
-  const fetchIsOwner = useCallback(async () => {
-    if (!collectionAddress) return;
-    try {
-      const nftContract = await provider.contract().at(collectionAddress);
-
-      const owner = await nftContract.ownerOf(tokenId).call();
-
-      const hexOwner = provider.address.toHex(address);
-
-      if (owner === hexOwner) {
-        setIsOwner(true);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionAddress]);
-
-  const fetchListingSeller = useCallback(async () => {
-    if (!collectionAddress) return;
-    try {
-      const nexusProtocol = await provider
-        .contract()
-        .at(process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS);
-
-      const fetchedSeller = await nexusProtocol
-        .getListingSeller(collectionAddress, tokenId)
-        .call();
-
-      setSeller(provider.address.fromHex(fetchedSeller));
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionAddress]);
-
-  const fetchListingPrice = useCallback(async () => {
-    if (!collectionAddress) return;
-    try {
-      const nexusProtocol = await provider
-        .contract()
-        .at(process.env.NEXT_PUBLIC_NEXUS_CONTRACT_ADDRESS);
-
-      const hasListingResult = await nexusProtocol
-        .hasActiveListing(collectionAddress, tokenId)
-        .call();
-
-      const listingPriceNum = hasListingResult.toNumber() / 10 ** 6;
-
-      if (listingPriceNum === 0) {
-        setListingPrice("");
-        return;
-      }
-
-      const listingPriceStr = listingPriceNum.toFixed(2);
-
-      setListingPrice(listingPriceStr);
-      setListingPriceBN(hasListingResult.toNumber());
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionAddress]);
-
-  const fetchTokenURI = useCallback(async () => {
-    if (!collectionAddress) return;
-    try {
-      const nftContract = await provider.contract().at(collectionAddress);
-
-      const uri = await nftContract["tokenURI"](tokenId).call();
-
-      const response = await fetch(uri);
-
-      const result = await response.json();
-
-      setTokenURI(uri);
-      setMetadata(result);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [collectionAddress, tokenId]);
-
   useEffect(() => {
     if (!collMetadata) {
-      fetchCollectionURI();
+      fetchCollection();
     }
-    if (!trxPrice) {
-      fetchTRXPrice();
-    }
-    if (!isOwner) {
-      fetchIsOwner();
+    if (!ethPrice) {
+      fetchethPrice();
     }
     if (history.length === 0) {
       fetchAssetInfo();
     }
-    if (!listingPrice) {
-      fetchListingPrice();
-    }
-    if (!seller) {
-      fetchListingSeller();
-    }
     if (!metadata) {
-      fetchTokenURI();
+      fetchToken();
     }
-  }, [fetchTRXPrice, fetchIsOwner, fetchListingPrice, fetchTokenURI]);
+  }, [fetchethPrice, fetchCollection, fetchToken, fetchAssetInfo]);
 
   const assetDetails = useMemo(() => {
     if (!collectionAddress || !metadata || !tokenURI) return [];
@@ -201,7 +168,7 @@ function Asset() {
       },
       {
         title: "Blockchain",
-        subtitle: "TRON Shasta Testnet",
+        subtitle: "Aurora Testnet",
       },
       {
         title: "Model",
@@ -212,15 +179,27 @@ function Asset() {
         link: tokenURI,
       },
       {
-        title: "View collection on Tronscan",
-        link: `https://shasta.tronscan.org/#/contract/${collectionAddress}/transactions`,
+        title: "View collection on Aurorascan",
+        link: `https://testnet.aurorascan.dev/token/${collectionAddress}`,
       },
     ];
   }, [metadata, tokenURI]);
 
+  const isOwner = useMemo(() => {
+    return (
+      owner && address && String(owner).toLowerCase() === address.toLowerCase()
+    );
+  }, [owner]);
+
+  const listingPrice = useMemo(() => {
+    if (hasNoListing || !listingBN || (listingBN as BigNumber).isZero())
+      return "";
+    return ethers.utils.formatEther(listingBN as BigNumber);
+  }, [hasNoListing, listingBN]);
+
   const listingPriceFiat = useMemo(
-    () => (trxPrice * Number(listingPrice)).toFixed(2),
-    [trxPrice, listingPrice]
+    () => (ethPrice * Number(listingPrice)).toFixed(2),
+    [ethPrice, listingPrice]
   );
 
   const modelUrl = useMemo(() => {
@@ -253,7 +232,7 @@ function Asset() {
     return metadata.attributes;
   }, [metadata]);
 
-  if (!tokenId || !metadata)
+  if (!tokenId || !metadata || !collMetadata)
     return (
       <VStack className={styles.main}>
         <Spinner />
@@ -268,11 +247,10 @@ function Asset() {
         tokenId={tokenId as string}
         collectionAddress={collectionAddress as string}
         isOwner={isOwner}
-        listingPriceBN={listingPriceBN}
         listingPrice={listingPrice}
-        trxPrice={trxPrice}
+        ethPrice={ethPrice}
         metadata={metadata}
-        seller={seller}
+        seller={seller as string}
       />
       <VStack
         w="1000px"
@@ -334,7 +312,7 @@ function Asset() {
                         <VStack className={styles.historyLeftSection}>
                           {price && (
                             <Text className={styles.historyTitle}>
-                              {price} TRX
+                              {price} aETH
                             </Text>
                           )}
                           {fiatPrice && (
@@ -402,7 +380,7 @@ function Asset() {
           ) : (
             <VStack className={styles.priceContainer}>
               <Text className={styles.priceTitle}>Price</Text>
-              <Text className={styles.priceTag}>{listingPrice} TRX</Text>
+              <Text className={styles.priceTag}>{listingPrice} aETH</Text>
               <Text className={styles.priceUSD}>${listingPriceFiat} USD</Text>
               <Button className={styles.purchaseBtn} onClick={onOpen}>
                 {isOwner ? "Cancel listing" : "Purchase"}

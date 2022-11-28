@@ -6,23 +6,23 @@
 // global scope, and execute the script.
 const hre = require("hardhat");
 
-async function main() {
-  const MyNFT = await hre.ethers.getContractFactory("MyNFT");
+const collectionURI =
+  "https://bafybeid76hfxrsh22d4ofp4o4qvwxntnvuxoh2akt4wgxvl7hyy6asyxie.ipfs.w3s.link/journey_collection.json";
 
-  const myNFT = await MyNFT.attach(
+async function main() {
+  const NexusNFT = await hre.ethers.getContractFactory("NexusNFT");
+
+  const nexusNFT = await NexusNFT.attach(
     process.env.NFT_CONTRACT_ADDRESS // deployed contract address
   );
 
-  console.log("MyNFT attached to:", myNFT.address);
+  console.log("MyNFT attached to:", nexusNFT.address);
 
-  console.log("Minting...");
+  console.log("Setting collection URI...");
 
-  const res = await myNFT.mintNFT(
-    "0x6B4583438C24839ea459e34e9F21aD419A846B0b",
-    "https://bafybeibl7f5iijvv3gjis6ibkqn67dmfo6jb2lhelfa5lb74d3q5io25lq.ipfs.w3s.link/fighter.json"
-  );
+  const res = await nexusNFT.setCollectionURI(collectionURI);
 
-  console.log("Minted!", res);
+  console.log("Set!", res);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

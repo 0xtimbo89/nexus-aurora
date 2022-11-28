@@ -24,7 +24,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 
-const collectionAddress = "TJXL51C7YCNstnepHHW6cKo6RU4ebCwEZk";
+const collectionAddress = "0x6a47f91b792a89858d4dd1fc6a59cff5b89be276";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -43,8 +43,8 @@ const Home: NextPage = () => {
               Create, trade, and showcase Metaverse 3D assets
             </Text>
             <Text className={styles.landingSubtitle}>
-              Nexus is the world’s first metaverse-focused marketplace built on
-              the TRON Blockchain
+              Nexus is the world’s first metaverse focused marketplace built on
+              the NEAR Aurora blockchain
             </Text>
             <HStack>
               <Link href="/explore">
@@ -71,7 +71,7 @@ const Home: NextPage = () => {
                   Space Fighters (3rd Edition)
                 </Text>
                 <Text className={styles.landingImageCaptionSubtitle2}>
-                  Floor: 150.00 TRX
+                  Floor: 0.001 aETH
                 </Text>
               </VStack>
             </VStack>
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
                     {name}
                   </Text>
                   <Text className={styles.landingImageCaptionSubtitle}>
-                    Floor: {floor} TRX
+                    Floor: {floor} aETH
                   </Text>
                 </VStack>
               </VStack>
@@ -147,8 +147,8 @@ const Home: NextPage = () => {
                             <Text>{collection}</Text>
                           </HStack>
                         </Td>
-                        <Td className={styles.tableCell}>{floor} TRX</Td>
-                        <Td className={styles.tableCell}>{volume}M TRX</Td>
+                        <Td className={styles.tableCell}>{floor} aETH</Td>
+                        <Td className={styles.tableCell}>{volume} aETH</Td>
                       </Tr>
                     ))}
                 </Tbody>
@@ -184,8 +184,8 @@ const Home: NextPage = () => {
                             <Text>{collection}</Text>
                           </HStack>
                         </Td>
-                        <Td className={styles.tableCell}>{floor} TRX</Td>
-                        <Td className={styles.tableCell}>{volume} TRX</Td>
+                        <Td className={styles.tableCell}>{floor} aETH</Td>
+                        <Td className={styles.tableCell}>{volume} aETH</Td>
                       </Tr>
                     ))}
                 </Tbody>
